@@ -22,6 +22,7 @@ import java.util.Map;
  * @Description:
  * @date 2019/6/11 15:59
  */
+@Controller
 public class testController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
