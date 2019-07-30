@@ -7,6 +7,7 @@ import com.example.generate_code.vo.UniqueIndexVO;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @Description:
  * @date 2019/6/11 15:59
  */
+@Controller
 public class testController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
