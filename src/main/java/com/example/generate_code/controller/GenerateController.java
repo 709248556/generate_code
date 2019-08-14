@@ -25,7 +25,7 @@ public class GenerateController {
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
     private static final String URL = "settlement";   //todo
-    private static final String TABLE_NAME = "bz_special_rate"; //todo
+    private static final String TABLE_NAME = "bz_chnl_mch_special_data"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{"channelId","settleDate","chnlMchNo","settleState"};  //todo
     private static final String[] SEARCH_PLACEHOLDER = new String[]{"请选择渠道","结算日期","渠道商户号","请选择渠道资金转结状态"};  //todo
