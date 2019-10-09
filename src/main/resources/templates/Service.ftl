@@ -18,7 +18,7 @@ public interface ${tableNameFormat}Service {
     /**
      * 根据Id删除
      */
-    Result deleteById(long id);
+    Result deleteById(Long id);
 
     /**
      * 编辑
@@ -31,8 +31,8 @@ public interface ${tableNameFormat}Service {
     QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query);
 
     /**
-    * 根据id查询
+    * 单个查询
     */
-    SingleResult<${tableNameFormat}DTO> getSingleById(long id);
+    SingleResult<${tableNameFormat}DTO> querySingle(Long id);
 }
 

@@ -64,6 +64,8 @@ public class FormatUtil {
                 format.add("Integer");
             }else if (item.equalsIgnoreCase("TEXT")) {
                 format.add("String");
+            }else if (item.equalsIgnoreCase("decimal")) {
+                format.add("BigDecimal");
             }else {
                 format.add("UNDEFINE");
             }

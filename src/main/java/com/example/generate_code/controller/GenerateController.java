@@ -24,11 +24,11 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String URL = "settlement";   //todo
-    private static final String TABLE_NAME = "bz_chnl_mch_special_data"; //todo
+    private static final String PARENT_URL = "report";   //todo
+    private static final String TABLE_NAME = "bz_product_rate"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
-    private static final String[] SEARCH_NAME = new String[]{"channelId","settleDate","chnlMchNo","settleState"};  //todo
-    private static final String[] SEARCH_PLACEHOLDER = new String[]{"请选择渠道","结算日期","渠道商户号","请选择渠道资金转结状态"};  //todo
+    private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
+    private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
     private static final String SELECT = "select";
     private static final String INPUT = "input";
     private static final String[] SEARCH_TYPE = new String[]{SELECT,INPUT,INPUT,SELECT};  //todo
@@ -78,7 +78,7 @@ public class GenerateController {
             dataMap.put("serialVersionUID2",(Math.random() * 9 + 1) * 1000000000000000l);
             dataMap.put("tableName",TABLE_NAME);
             dataMap.put("tableShortName",FormatUtil.getShortName(TABLE_NAME));
-            dataMap.put("URL",URL);
+            dataMap.put("URL",PARENT_URL);
             //jsp数据
             getJspDateMap(dataMap);
 

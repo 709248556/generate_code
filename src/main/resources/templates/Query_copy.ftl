@@ -1,4 +1,4 @@
-
+//有备注//
 import java.io.Serializable;
 
 /**  
@@ -12,7 +12,7 @@ public class ${tableNameFormat}Query extends PageQuery implements Serializable{
 
 	private static final long serialVersionUID = ${serialVersionUID2?c}L ;
 <#list baseResultMapVoList as baseResultMapVo >
-    private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
+    private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};//${baseResultMapVo.columnComment}
 </#list>
 <#list baseResultMapVoList as baseResultMapVo >
     public ${baseResultMapVo.DTOType} get${baseResultMapVo.columnNameUpperCase}(){

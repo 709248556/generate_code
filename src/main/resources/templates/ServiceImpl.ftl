@@ -70,14 +70,14 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
                 } catch (Exception e) {
                     logger.info("${tableNameFormat}ServiceImpl.queryList error: {}", e.toString());
                 }
-            return result;
+        return result;
     }
 
     @Override
-    public SingleResult<${tableNameFormat}DTO> getSingleById(Long id) {
+    public SingleResult<${tableNameFormat}DTO> querySingle(Long id) {
         SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
             try {
-                ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.queryById(id);
+                ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(id);
                 result.setSuccess(true);
                 result.setResult(${tableNameFormatOnCase}DTO);
                 result.setErrorCode(ResponseEnum.API_ERROR_CODE_0000.getRespCode());

@@ -34,5 +34,5 @@ public interface ${tableNameFormat}Dao {
     /**
     * 根据id查询
     */
-    ${tableNameFormat}DTO queryById(long id);
+    ${tableNameFormat}DTO querySingle(Long id);
 }

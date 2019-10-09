@@ -12,7 +12,7 @@ public class ${tableNameFormat}DTO implements Serializable{
 
 	private static final long serialVersionUID = ${serialVersionUID1?c}L ;
 <#list baseResultMapVoList as baseResultMapVo >
-    private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};//${baseResultMapVo.columnComment}
+    private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 </#list>
 <#list baseResultMapVoList as baseResultMapVo >
     public ${baseResultMapVo.DTOType} get${baseResultMapVo.columnNameUpperCase}(){

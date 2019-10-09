@@ -35,6 +35,10 @@
             <if test=" ${baseResultMapVo.property} != null and ${baseResultMapVo.property} !=''">
                 ${baseResultMapVo.column} =<#noparse>#{</#noparse>${baseResultMapVo.property}},
             </if>
+            <#elseif baseResultMapVo.jdbcType == "CHAR">
+            <if test=" ${baseResultMapVo.property} != null and ${baseResultMapVo.property} !=''">
+                ${baseResultMapVo.column} =<#noparse>#{</#noparse>${baseResultMapVo.property}},
+            </if>
             <#else>
             <if test="${baseResultMapVo.property} != null">
                 ${baseResultMapVo.column} = <#noparse>#{</#noparse>${baseResultMapVo.property}},
@@ -53,6 +57,10 @@
             <if test="${baseResultMapVo.property} != null and ${baseResultMapVo.property} !=''">
                 AND ${tableShortName}.${baseResultMapVo.column} =<#noparse>#{</#noparse>${baseResultMapVo.property}}
             </if>
+            <#elseif baseResultMapVo.jdbcType == "CHAR">
+            <if test="${baseResultMapVo.property} != null and ${baseResultMapVo.property} !=''">
+                AND ${tableShortName}.${baseResultMapVo.column} =<#noparse>#{</#noparse>${baseResultMapVo.property}}
+            </if>
             <#else>
             <if test="${baseResultMapVo.property} != null">
                 AND ${tableShortName}.${baseResultMapVo.column} = <#noparse>#{</#noparse>${baseResultMapVo.property}}
@@ -62,7 +70,7 @@
         </trim>
     </select>
 
-    <select id="queryById" resultType="${tableNameFormat}DTO" parameterType="${tableNameFormat}Query">
+    <select id="querySingle" resultType="${tableNameFormat}DTO" parameterType="${tableNameFormat}Query">
         select <include refid="Base_Column_List"/> from ${tableName} ${tableShortName}
         where <#list uniqueIndexVOList as uniqueIndexVo ><#if uniqueIndexVo_has_next>${tableShortName}.${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}} and <#else>${tableShortName}.${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}}</#if></#list>
     </select>
