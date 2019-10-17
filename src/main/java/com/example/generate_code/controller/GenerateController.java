@@ -24,8 +24,8 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String PARENT_URL = "report";   //todo
-    private static final String TABLE_NAME = "bz_product_rate"; //todo
+//    private static final String PARENT_URL = "card";   //todo
+    private static final String TABLE_NAME = "bz_msg_carousel"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
@@ -77,8 +77,10 @@ public class GenerateController {
             dataMap.put("serialVersionUID1",(Math.random() * 9 + 1) * 1000000000000000l);
             dataMap.put("serialVersionUID2",(Math.random() * 9 + 1) * 1000000000000000l);
             dataMap.put("tableName",TABLE_NAME);
-            dataMap.put("tableShortName",FormatUtil.getShortName(TABLE_NAME));
-            dataMap.put("URL",PARENT_URL);
+            dataMap.put("tableShortName",FormatUtil.getShortName(TABLE_NAME).equals("as")  ? "as1" : FormatUtil.getShortName(TABLE_NAME) );
+            dataMap.put("URL",FormatUtil._splitOnCase(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
+//            dataMap.put("URL",FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
+            dataMap.put("fristColumnName",FormatUtil.columnNames(DatabaseUtil.getColumnNames(TABLE_NAME)).get(0));//第一个字段名areaId
             //jsp数据
             getJspDateMap(dataMap);
 

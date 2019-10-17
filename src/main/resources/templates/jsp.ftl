@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="search_box">
-			<form method="get" id="SearchF" action="<#noparse>${ctx}</#noparse>/${URL}/${tableNameFormatOnCase}">
+			<form method="get" id="SearchF" action="<#noparse>${ctx}</#noparse>${URL}">
 				<div class="search_nav">
 					<ul>//2
 						<#list searchVos as searchVo >
@@ -65,6 +65,8 @@
 						<table>
 							<tbody>
 								<tr>//3
+                                    <th width="50">操作</th>
+                                    <th width="50">功能</th>
                                     <#list baseResultMapVoList as baseResultMapVo >
                                     <th width="100" class="change">${baseResultMapVo.columnComment}</th>
                                     </#list>
@@ -78,9 +80,17 @@
 						<tbody>
 							<c:forEach items="<#noparse>${source.results}</#noparse>" var="entity">
 							<tr>//4
+                                <td class="notitle">
+                                    <input name="Item_Check" type="checkbox" value="<#noparse>${entity.</#noparse>${fristColumnName}}" />
+                                </td>
+                                <td>
+									<span>
+										<a href='javascript:void(0)' class="detail-btn" onClick="detail('<#noparse>${entity.</#noparse>${fristColumnName}}')">详情</a>
+									</span>
+                                </td>
                                 <#list baseResultMapVoList as baseResultMapVo >
 								<#if baseResultMapVo.jdbcType == "DATE">
-                                <td><fmt:formatDate value="<#noparse>${entity.</#noparse>${baseResultMapVo.property}}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                <td><fmt:formatDate value="<#noparse>${entity.</#noparse>${baseResultMapVo.property}}" pattern="yyyy-MM-dd" /></td>
 								<#else>
 								<td><#noparse>${entity.</#noparse>${baseResultMapVo.property}}</td>
 								</#if>
@@ -120,6 +130,29 @@
 			</#if>
 		</#list>
         });
+        function detail(id) {
+            if(id){
+                layerOpen("详情","/detailView?id=" + id,['80%','96%']);
+            }
+        }
+        function add() {
+            layerOpen("新增","/addView",['80%','96%']);
+        }
+        function edit() {
+            var id = ItemCheck_ID();
+            layerOpen("编辑","/editView?id="+id,['80%','96%']);
+        }
+        function delete${tableNameFormat}() {
+            var id = ItemCheck_ID();
+            if(id){
+                parent.layer.confirm('您确定要删除选择的数据吗?该数据删除后不可恢复！请谨慎操作!', {
+                    icon: 3,
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    AjaxConfirm("post","<#noparse>${ctx}</#noparse>${URL}/delete${tableNameFormat}?id=" + id);
+                });
+            }
+        }
         parent.layer.close(parent.all_parent_load);
 	</script>
 	</body>

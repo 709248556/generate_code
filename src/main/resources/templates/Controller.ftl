@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = ${tableNameFormat}Controller.PARENT_URL)
 public class ${tableNameFormat}Controller extends BaseController {
 
-	protected final static String PARENT_URL = "/${URL}/${tableNameFormatOnCase}";
+	protected final static String PARENT_URL = "${URL}";
 
 	private Logger logger = LoggerFactory.getLogger(${tableNameFormat}Controller.class);
 
@@ -92,7 +92,7 @@ public class ${tableNameFormat}Controller extends BaseController {
     */
     @RequestMapping(value = "/editView")
     public String editView(HttpServletRequest request, Long id, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.getSingleById(id);
+        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
         model.addAttribute("${tableNameFormatOnCase}", singleResult.getResult());
         return PARENT_URL + "/edit";
     }
@@ -107,7 +107,7 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         try {
-            result = advertService.update(advert);
+            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.EDIT_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -123,4 +123,47 @@ public class ${tableNameFormat}Controller extends BaseController {
         }
         return JSONArray.fromObject(json).toString();
     }
+
+    /**
+    * @Description: 删除
+    * @param request 请求头
+    * @param id 实体id
+    * @param model 模型
+    * @return
+    */
+    @ResponseBody
+    @PostMapping(value = "/delete${tableNameFormat}")
+    public String deleteNotice(HttpServletRequest request, Long id, Model model) {
+    ReturnJsonVO json = new ReturnJsonVO();
+    try {
+    Result result = ${tableNameFormatOnCase}Service.deleteById(id);
+    if (result.isSuccess()) {
+        json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
+        json.setStatus(ViewMsgConstant.SUCCEED_CODE);
+    } else {
+        json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+        json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
+    }
+    } catch (Exception e) {
+        json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+        json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
+        logger.warn("errorcode " + ViewMsgConstant.DELETE_DEFEATED);
+        logger.error(e.getMessage());
+    }
+    return JSONArray.fromObject(json).toString();
+    }
+
+    /**
+    * @Description: 详情页面
+    * @param request 请求头
+    * @param id 实体id
+    * @param model 模型
+    * @return
+    */
+    @RequestMapping(value = "/detailView")
+    public String detailView(HttpServletRequest request, Long id, Model model) {
+        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
+        model.addAttribute("systemNotice",singleResult.getResult() );
+        return PARENT_URL + "/detail";
+        }
 }

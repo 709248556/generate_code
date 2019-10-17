@@ -66,6 +66,8 @@ public class FormatUtil {
                 format.add("String");
             }else if (item.equalsIgnoreCase("decimal")) {
                 format.add("BigDecimal");
+            }else if (item.equalsIgnoreCase("LONGTEXT")) {
+                format.add("String");
             }else {
                 format.add("UNDEFINE");
             }
@@ -112,12 +114,21 @@ public class FormatUtil {
         return format;
     }
 
-    //按"_"进行分割，并把_后的第一个字母拼成缩写
+    //按"_"进行分割，并把_后的字符拼接成缩写
     public static String getShortName(String original){
         String[] s = original.split("_");
         String format = "";
         for(int i = 1;i < s.length;i++){
             format = format+s[i].charAt(0);        }
+        return format;
+    }
+    //按"_"进行分割，并把_后的字符用"/"拼接
+    //system_notice ->/system/notice
+    public static String _splitOnCase(String original){
+        String[] s = original.split("_");
+        String format = "";
+        for(int i = 0;i < s.length;i++){
+            format = format+"/"+s[i];        }
         return format;
     }
 }
