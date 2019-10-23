@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,7 +103,7 @@ public class ${tableNameFormat}Controller extends BaseController {
     * @param ${tableNameFormatOnCase}DTO
     * @return
     */
-    @RequestMapping(value = "/edit")
+    @RequestMapping(value = "/editSub")
     @ResponseBody
     public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();

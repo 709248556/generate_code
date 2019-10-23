@@ -132,15 +132,15 @@
         });
         function detail(id) {
             if(id){
-                layerOpen("详情","/detailView?id=" + id,['80%','96%']);
+                layerOpen("详情","/detailView?id=" + id);
             }
         }
         function add() {
-            layerOpen("新增","/addView",['80%','96%']);
+            layerOpen("新增","/addView");
         }
         function edit() {
             var id = ItemCheck_ID();
-            layerOpen("编辑","/editView?id="+id,['80%','96%']);
+            layerOpen("编辑","/editView?id="+id);
         }
         function delete${tableNameFormat}() {
             var id = ItemCheck_ID();

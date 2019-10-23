@@ -25,7 +25,7 @@ public class GenerateController {
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
 //    private static final String PARENT_URL = "card";   //todo
-    private static final String TABLE_NAME = "bz_msg_carousel"; //todo
+    private static final String TABLE_NAME = "bz_goods"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
@@ -50,6 +50,9 @@ public class GenerateController {
         Writer serviceImplOut = null;
         Writer controllerlOut = null;
         Writer jspOut = null;
+        Writer addOut = null;
+        Writer editOut = null;
+        Writer detailOut = null;
         try {
 
             // step2 获取模版路径
@@ -65,6 +68,9 @@ public class GenerateController {
             Template serviceImplTemplate = configuration.getTemplate("ServiceImpl.ftl");
             Template controllerlTemplate = configuration.getTemplate("Controller.ftl");
             Template jspTemplate = configuration.getTemplate("jsp.ftl");
+            Template addTemplate = configuration.getTemplate("add.ftl");
+            Template editTemplate = configuration.getTemplate("edit.ftl");
+            Template detailTemplate = configuration.getTemplate("detail.ftl");
 
             //获取数据模型
             List<BaseResultMapVo> baseResultMapVoList = DatabaseUtil.getBaseResultMap(TABLE_NAME);
@@ -93,6 +99,9 @@ public class GenerateController {
             File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File ControllerlFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
             File jspFile = new File(TARGET_PATH + "\\" + "index.jsp");
+            File addFile = new File(TARGET_PATH + "\\" + "add.jsp");
+            File editFile = new File(TARGET_PATH + "\\" + "edit.jsp");
+            File detailFile = new File(TARGET_PATH + "\\" + "detail.jsp");
 
             xmlOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(xmlFile)));
             DTOOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DTOFile)));
@@ -102,6 +111,9 @@ public class GenerateController {
             serviceImplOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplFile)));
             controllerlOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ControllerlFile)));
             jspOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jspFile)));
+            addOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(addFile)));
+            editOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(editFile)));
+            detailOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(detailFile)));
 
             // step6 输出文件
             xmlTemplate.process(dataMap, xmlOut);
@@ -120,6 +132,12 @@ public class GenerateController {
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^controller文件创建成功 !");
             jspTemplate.process(dataMap, jspOut);
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^jsp文件创建成功 !");
+            addTemplate.process(dataMap, addOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^add文件创建成功 !");
+            editTemplate.process(dataMap, editOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^edit文件创建成功 !");
+            detailTemplate.process(dataMap, detailOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^detail文件创建成功 !");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,19 +153,28 @@ public class GenerateController {
                     queryOut.flush();
                 }
                 if (null != DAOOut) {
-                    queryOut.flush();
+                    DAOOut.flush();
                 }
                 if (null != serviceOut) {
-                    queryOut.flush();
+                    serviceOut.flush();
                 }
                 if (null != serviceImplOut) {
-                    queryOut.flush();
+                    serviceImplOut.flush();
                 }
                 if (null != controllerlOut) {
-                    queryOut.flush();
+                    controllerlOut.flush();
                 }
                 if (null != jspOut) {
-                    queryOut.flush();
+                    jspOut.flush();
+                }
+                if (null != addOut) {
+                    addOut.flush();
+                }
+                if (null != editOut) {
+                    editOut.flush();
+                }
+                if (null != detailOut) {
+                    detailOut.flush();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();
