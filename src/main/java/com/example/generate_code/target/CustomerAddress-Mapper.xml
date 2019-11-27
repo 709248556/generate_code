@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfull.service.webbusiness.dao.">
+
+    <sql id="Base_Column_List">
+                ca.Fcust_addr_id AS custAddrId,
+        ca.Fcustomer_id AS customerId,
+        ca.Fcontacts_name AS contactsName,
+        ca.Fcontacts_phone AS contactsPhone,
+        ca.Fcontacts_gender AS contactsGender,
+        ca.Fprovince_code AS provinceCode,
+        ca.Fprovince_name AS provinceName,
+        ca.Fcity_code AS cityCode,
+        ca.Fcity_name AS cityName,
+        ca.Fdistrict_code AS districtCode,
+        ca.Fdistrict_name AS districtName,
+        ca.Fstreet_id AS streetId,
+        ca.Fstreet_name AS streetName,
+        ca.Fcommunity_id AS communityId,
+        ca.Faddress AS address,
+        ca.Fis_default AS isDefault,
+        ca.Fcreate_time AS createTime,
+        ca.Flast_time AS lastTime,
+        ca.Fext_field1 AS extField1
+    </sql>
+
+    <insert id="insert" parameterType="CustomerAddressDTO">
+        INSERT INTO bz_customer_address
+        ( 
+        Fcust_addr_id,
+        Fcustomer_id,
+        Fcontacts_name,
+        Fcontacts_phone,
+        Fcontacts_gender,
+        Fprovince_code,
+        Fprovince_name,
+        Fcity_code,
+        Fcity_name,
+        Fdistrict_code,
+        Fdistrict_name,
+        Fstreet_id,
+        Fstreet_name,
+        Fcommunity_id,
+        Faddress,
+        Fis_default,
+        Fcreate_time,
+        Flast_time,
+        Fext_field1
+        )
+        VALUES
+        (
+        #{custAddrId},
+        #{customerId},
+        #{contactsName},
+        #{contactsPhone},
+        #{contactsGender},
+        #{provinceCode},
+        #{provinceName},
+        #{cityCode},
+        #{cityName},
+        #{districtCode},
+        #{districtName},
+        #{streetId},
+        #{streetName},
+        #{communityId},
+        #{address},
+        #{isDefault},
+        #{createTime},
+        #{lastTime},
+        #{extField1}
+        )
+    </insert>
+
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM bz_customer_address
+        where Fcust_addr_id =  #{custAddrId}
+    </delete>
+
+    <update id="update" parameterType="CustomerAddressDTO">
+        update bz_customer_address
+        <set>
+            <if test="custAddrId != null">
+                Fcust_addr_id = #{custAddrId},
+            </if>
+            <if test="customerId != null">
+                Fcustomer_id = #{customerId},
+            </if>
+            <if test=" contactsName != null and contactsName !=''">
+                Fcontacts_name =#{contactsName},
+            </if>
+            <if test=" contactsPhone != null and contactsPhone !=''">
+                Fcontacts_phone =#{contactsPhone},
+            </if>
+            <if test=" contactsGender != null and contactsGender !=''">
+                Fcontacts_gender =#{contactsGender},
+            </if>
+            <if test=" provinceCode != null and provinceCode !=''">
+                Fprovince_code =#{provinceCode},
+            </if>
+            <if test=" provinceName != null and provinceName !=''">
+                Fprovince_name =#{provinceName},
+            </if>
+            <if test=" cityCode != null and cityCode !=''">
+                Fcity_code =#{cityCode},
+            </if>
+            <if test=" cityName != null and cityName !=''">
+                Fcity_name =#{cityName},
+            </if>
+            <if test=" districtCode != null and districtCode !=''">
+                Fdistrict_code =#{districtCode},
+            </if>
+            <if test=" districtName != null and districtName !=''">
+                Fdistrict_name =#{districtName},
+            </if>
+            <if test="streetId != null">
+                Fstreet_id = #{streetId},
+            </if>
+            <if test=" streetName != null and streetName !=''">
+                Fstreet_name =#{streetName},
+            </if>
+            <if test="communityId != null">
+                Fcommunity_id = #{communityId},
+            </if>
+            <if test=" address != null and address !=''">
+                Faddress =#{address},
+            </if>
+            <if test=" isDefault != null and isDefault !=''">
+                Fis_default =#{isDefault},
+            </if>
+            <if test="createTime != null">
+                Fcreate_time = #{createTime},
+            </if>
+            <if test="lastTime != null">
+                Flast_time = #{lastTime},
+            </if>
+            <if test=" extField1 != null and extField1 !=''">
+                Fext_field1 =#{extField1},
+            </if>
+        </set>
+        where Fcust_addr_id =  #{custAddrId}
+    </update>
+
+    <select id="queryList" resultType="CustomerAddressDTO" parameterType="CustomerAddressQuery">
+        select <include refid="Base_Column_List"/> from bz_customer_address ca
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="custAddrId != null">
+                AND ca.Fcust_addr_id = #{custAddrId}
+            </if>
+            <if test="customerId != null">
+                AND ca.Fcustomer_id = #{customerId}
+            </if>
+            <if test="contactsName != null and contactsName !=''">
+                AND ca.Fcontacts_name =#{contactsName}
+            </if>
+            <if test="contactsPhone != null and contactsPhone !=''">
+                AND ca.Fcontacts_phone =#{contactsPhone}
+            </if>
+            <if test="contactsGender != null and contactsGender !=''">
+                AND ca.Fcontacts_gender =#{contactsGender}
+            </if>
+            <if test="provinceCode != null and provinceCode !=''">
+                AND ca.Fprovince_code =#{provinceCode}
+            </if>
+            <if test="provinceName != null and provinceName !=''">
+                AND ca.Fprovince_name =#{provinceName}
+            </if>
+            <if test="cityCode != null and cityCode !=''">
+                AND ca.Fcity_code =#{cityCode}
+            </if>
+            <if test="cityName != null and cityName !=''">
+                AND ca.Fcity_name =#{cityName}
+            </if>
+            <if test="districtCode != null and districtCode !=''">
+                AND ca.Fdistrict_code =#{districtCode}
+            </if>
+            <if test="districtName != null and districtName !=''">
+                AND ca.Fdistrict_name =#{districtName}
+            </if>
+            <if test="streetId != null">
+                AND ca.Fstreet_id = #{streetId}
+            </if>
+            <if test="streetName != null and streetName !=''">
+                AND ca.Fstreet_name =#{streetName}
+            </if>
+            <if test="communityId != null">
+                AND ca.Fcommunity_id = #{communityId}
+            </if>
+            <if test="address != null and address !=''">
+                AND ca.Faddress =#{address}
+            </if>
+            <if test="isDefault != null and isDefault !=''">
+                AND ca.Fis_default =#{isDefault}
+            </if>
+            <if test="createTime != null">
+                AND ca.Fcreate_time = #{createTime}
+            </if>
+            <if test="lastTime != null">
+                AND ca.Flast_time = #{lastTime}
+            </if>
+            <if test="extField1 != null and extField1 !=''">
+                AND ca.Fext_field1 =#{extField1}
+            </if>
+        </trim>
+    </select>
+
+    <select id="querySingle" resultType="CustomerAddressDTO" parameterType="CustomerAddressQuery">
+        select <include refid="Base_Column_List"/> from bz_customer_address ca
+        where ca.Fcust_addr_id =  #{custAddrId}
+    </select>
+</mapper>

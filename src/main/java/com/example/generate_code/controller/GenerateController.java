@@ -25,7 +25,7 @@ public class GenerateController {
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
 //    private static final String PARENT_URL = "card";   //todo
-    private static final String TABLE_NAME = "bz_goods"; //todo
+    private static final String TABLE_NAME = "bz_customer_address"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
@@ -53,6 +53,7 @@ public class GenerateController {
         Writer addOut = null;
         Writer editOut = null;
         Writer detailOut = null;
+        Writer ComponentOut = null;
         try {
 
             // step2 获取模版路径
@@ -71,6 +72,7 @@ public class GenerateController {
             Template addTemplate = configuration.getTemplate("add.ftl");
             Template editTemplate = configuration.getTemplate("edit.ftl");
             Template detailTemplate = configuration.getTemplate("detail.ftl");
+            Template ComponentTemplate = configuration.getTemplate("Component.ftl");
 
             //获取数据模型
             List<BaseResultMapVo> baseResultMapVoList = DatabaseUtil.getBaseResultMap(TABLE_NAME);
@@ -102,6 +104,7 @@ public class GenerateController {
             File addFile = new File(TARGET_PATH + "\\" + "add.jsp");
             File editFile = new File(TARGET_PATH + "\\" + "edit.jsp");
             File detailFile = new File(TARGET_PATH + "\\" + "detail.jsp");
+            File ComponentFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Component.java");
 
             xmlOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(xmlFile)));
             DTOOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DTOFile)));
@@ -114,6 +117,7 @@ public class GenerateController {
             addOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(addFile)));
             editOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(editFile)));
             detailOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(detailFile)));
+            ComponentOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ComponentFile)));
 
             // step6 输出文件
             xmlTemplate.process(dataMap, xmlOut);
@@ -138,7 +142,8 @@ public class GenerateController {
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^edit文件创建成功 !");
             detailTemplate.process(dataMap, detailOut);
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^detail文件创建成功 !");
-
+            ComponentTemplate.process(dataMap,ComponentOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Component文件创建成功 !");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -175,6 +180,9 @@ public class GenerateController {
                 }
                 if (null != detailOut) {
                     detailOut.flush();
+                }
+                if (null != ComponentOut) {
+                    ComponentOut.flush();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();
