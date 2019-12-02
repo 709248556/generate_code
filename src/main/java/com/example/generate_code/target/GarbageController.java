@@ -15,15 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping(value = ${tableNameFormat}Controller.PARENT_URL)
-public class ${tableNameFormat}Controller extends BaseController {
+@RequestMapping(value = GarbageController.PARENT_URL)
+public class GarbageController extends BaseController {
 
-	protected final static String PARENT_URL = "${URL}";
+	protected final static String PARENT_URL = "/garbage";
 
-	private Logger logger = LoggerFactory.getLogger(${tableNameFormat}Controller.class);
+	private Logger logger = LoggerFactory.getLogger(GarbageController.class);
 
 	@Autowired
-	private ${tableNameFormat}Service ${tableNameFormatOnCase}Service;
+	private GarbageService garbageService;
 	/**
 	 * @Title: indexView
 	 * @Description: 首页视图
@@ -32,12 +32,8 @@ public class ${tableNameFormat}Controller extends BaseController {
 	 * @param query 查询对象
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String indexView(Model model, HttpServletRequest request, ${tableNameFormat}Query query) {
-		QueryResult<${tableNameFormat}DTO> result = ${tableNameFormatOnCase}Service.queryList(query);
-        <#list searchVos as searchVo >
-        <#if searchVo.type == "select">
-        model.addAttribute("${searchVo.items}", ${searchVo.items}.values());
-        </#if></#list>
+	public String indexView(Model model, HttpServletRequest request, GarbageQuery query) {
+		QueryResult<GarbageDTO> result = garbageService.queryList(query);
         model.addAttribute("source", result);
         model.addAttribute("query", query);
         model.addAttribute("menuRight", menuRight(PARENT_URL));
@@ -58,15 +54,15 @@ public class ${tableNameFormat}Controller extends BaseController {
     /**
     * @Title: addSub
     * @Description: 新增提交
-    * @param ${tableNameFormatOnCase}DTO 新增实体
+    * @param garbageDTO 新增实体
     * @return
     */
     @RequestMapping(value = "/addSub", method = RequestMethod.POST)
     @ResponseBody
-    public String subSubmit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO,HttpServletRequest request) {
+    public String subSubmit(GarbageDTO garbageDTO,HttpServletRequest request) {
         ReturnJsonVO json = new ReturnJsonVO();
         try {
-            Result result = ${tableNameFormatOnCase}Service.insert(${tableNameFormatOnCase}DTO);
+            Result result = garbageService.insert(garbageDTO);
 
             if (result.isSuccess()){
                 json.setMessage(ViewMsgConstant.ADD_SUCCEED);
@@ -77,7 +73,7 @@ public class ${tableNameFormat}Controller extends BaseController {
         } catch (Exception e) {
             json.setStatus(ViewMsgConstant.DEFEATED_CODE);
             json.setMessage(ViewMsgConstant.ADD_DEFEATED);
-            logger.warn("${tableNameFormat}Controller " + ViewMsgConstant.ADD_DEFEATED);
+            logger.warn("GarbageController " + ViewMsgConstant.ADD_DEFEATED);
             logger.error(e.getMessage());
             e.printStackTrace();
         }
@@ -93,22 +89,22 @@ public class ${tableNameFormat}Controller extends BaseController {
     */
     @RequestMapping(value = "/editView")
     public String editView(HttpServletRequest request, Long id, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
-        model.addAttribute("${tableNameFormatOnCase}", singleResult.getResult());
+        SingleResult<GarbageDTO> singleResult = garbageService.querySingle(id);
+        model.addAttribute("garbage", singleResult.getResult());
         return PARENT_URL + "/edit";
     }
 
     /**
     * @Description: 编辑提交
-    * @param ${tableNameFormatOnCase}DTO
+    * @param garbageDTO
     * @return
     */
     @RequestMapping(value = "/editSub")
     @ResponseBody
-    public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
+    public String edit(GarbageDTO garbageDTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         try {
-            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            Result result = garbageService.update(garbageDTO);
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.EDIT_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -133,11 +129,11 @@ public class ${tableNameFormat}Controller extends BaseController {
     * @return
     */
     @ResponseBody
-    @PostMapping(value = "/delete${tableNameFormat}")
+    @PostMapping(value = "/deleteGarbage")
     public String deleteNotice(HttpServletRequest request, Long id, Model model) {
     ReturnJsonVO json = new ReturnJsonVO();
     try {
-    Result result = ${tableNameFormatOnCase}Service.deleteById(id);
+    Result result = garbageService.deleteById(id);
     if (result.isSuccess()) {
         json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
         json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -163,8 +159,8 @@ public class ${tableNameFormat}Controller extends BaseController {
     */
     @RequestMapping(value = "/detailView")
     public String detailView(HttpServletRequest request, Long id, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
-        model.addAttribute("${tableNameFormatOnCase}",singleResult.getResult() );
+        SingleResult<GarbageDTO> singleResult = garbageService.querySingle(id);
+        model.addAttribute("garbage",singleResult.getResult() );
         return PARENT_URL + "/detail";
         }
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/lib/jquery-validation/1.10.0/validate.css"/>
     <link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/css/style.css">
+    <link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/lib/select2/select2.min.css">
 </head>
 <body>
 <form id="FormSumbit" action="<#noparse>${ctx}</#noparse>${URL}/addSub" method="post" class="form-horizontal">
@@ -18,6 +19,7 @@
         <div class="col-sm-3">
             <input type="text" class="form-control required" name="${baseResultMapVo.property}" id="${baseResultMapVo.property}" placeholder="请输入${baseResultMapVo.columnComment}"/>
         </div>
+    </div>
         <#else>
         <label class="col-sm-2 control-label" for="${baseResultMapVo.property}"><span class="required">*</span>${baseResultMapVo.columnComment}</label>
         <div class="col-sm-3">
@@ -39,6 +41,7 @@
 <script src="<#noparse>${ctx}</#noparse>/static/js/jquery.form.js" type="text/javascript"></script>
 <script src="<#noparse>${ctx}</#noparse>/static/js/commonflag.js" type="text/javascript"></script>
 <script src="<#noparse>${ctx}</#noparse>/static/js/from-common.js" type="text/javascript"></script>
+<script src="<#noparse>${ctx}</#noparse>/static/lib/select2/select2.min.js"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN CORE VALIDATE -->
 <script src="<#noparse>${ctx}</#noparse>/static/lib/jquery-validation/1.10.0/jquery.validate.min.js" type="text/javascript"></script>
