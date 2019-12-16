@@ -19,7 +19,6 @@
         <div class="col-sm-3">
             <input type="text" class="form-control required" name="${baseResultMapVo.property}" id="${baseResultMapVo.property}" placeholder="请输入${baseResultMapVo.columnComment}" value="<#noparse>${</#noparse>${tableNameFormatOnCase}.${baseResultMapVo.property}}"/>
         </div>
-    </div>
         <#else>
         <label class="col-sm-2 control-label" for="${baseResultMapVo.property}"><span class="required">*</span>${baseResultMapVo.columnComment}</label>
         <div class="col-sm-3">

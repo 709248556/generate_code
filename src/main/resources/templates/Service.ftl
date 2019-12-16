@@ -33,6 +33,6 @@ public interface ${tableNameFormat}Service {
     /**
     * 单个查询
     */
-    SingleResult<${tableNameFormat}DTO> querySingle(Long id);
+    SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query);
 }
 

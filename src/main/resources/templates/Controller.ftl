@@ -87,13 +87,13 @@ public class ${tableNameFormat}Controller extends BaseController {
     /**
     * @Description: 编辑界面视图
     * @param request 请求头
-    * @param id 实体id
+    * @param query 查询对象
     * @param model 模型
     * @return
     */
     @RequestMapping(value = "/editView")
-    public String editView(HttpServletRequest request, Long id, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
+    public String editView(HttpServletRequest request,${tableNameFormat}Query query, Model model) {
+        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(query);
         model.addAttribute("${tableNameFormatOnCase}", singleResult.getResult());
         return PARENT_URL + "/edit";
     }
@@ -108,6 +108,8 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         try {
+
+
             Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.EDIT_SUCCEED);
@@ -117,10 +119,67 @@ public class ${tableNameFormat}Controller extends BaseController {
                 json.setMessage(ViewMsgConstant.EDIT_DEFEATED);
             }
         } catch (Exception e) {
-        json.setStatus(ViewMsgConstant.DEFEATED_CODE);
-        json.setMessage(ViewMsgConstant.EDIT_DEFEATED);
-        logger.warn("errorcode " + ViewMsgConstant.EDIT_DEFEATED);
-        logger.error(e.getMessage());
+            json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+            json.setMessage(ViewMsgConstant.EDIT_DEFEATED);
+            logger.warn("errorcode " + ViewMsgConstant.EDIT_DEFEATED);
+            logger.error(e.getMessage());
+        }
+        return JSONArray.fromObject(json).toString();
+    }
+
+    /**
+    * @Description: 冻结提交
+    * @param ${tableNameFormatOnCase}DTO
+    * @return
+    */
+    @RequestMapping(value = "/freeze${tableNameFormat}")
+    @ResponseBody
+    public String freeze(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
+        ReturnJsonVO json = new ReturnJsonVO();
+        try {
+
+
+            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            if (result.isSuccess()) {
+                json.setMessage(ViewMsgConstant.CHANGE_SUCCEED);
+                json.setStatus(ViewMsgConstant.SUCCEED_CODE);
+            } else {
+                json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+                json.setMessage(ViewMsgConstant.CHANGE_DEFEATED);
+            }
+        } catch (Exception e) {
+            json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+            json.setMessage(ViewMsgConstant.CHANGE_DEFEATED);
+            logger.warn("errorcode " + ViewMsgConstant.CHANGE_DEFEATED);
+            logger.error(e.getMessage());
+        }
+        return JSONArray.fromObject(json).toString();
+    }
+
+    /**
+    * @Description: 解冻提交
+    * @param ${tableNameFormatOnCase}DTO
+    * @return
+    */
+    @RequestMapping(value = "/thaw${tableNameFormat}")
+    @ResponseBody
+    public String thaw(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
+        ReturnJsonVO json = new ReturnJsonVO();
+        try {
+
+            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            if (result.isSuccess()) {
+                json.setMessage(ViewMsgConstant.CHANGE_SUCCEED);
+                json.setStatus(ViewMsgConstant.SUCCEED_CODE);
+            } else {
+                json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+                json.setMessage(ViewMsgConstant.CHANGE_DEFEATED);
+            }
+        } catch (Exception e) {
+            json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+            json.setMessage(ViewMsgConstant.CHANGE_DEFEATED);
+            logger.warn("errorcode " + ViewMsgConstant.CHANGE_DEFEATED);
+            logger.error(e.getMessage());
         }
         return JSONArray.fromObject(json).toString();
     }
@@ -135,36 +194,36 @@ public class ${tableNameFormat}Controller extends BaseController {
     @ResponseBody
     @PostMapping(value = "/delete${tableNameFormat}")
     public String deleteNotice(HttpServletRequest request, Long id, Model model) {
-    ReturnJsonVO json = new ReturnJsonVO();
-    try {
-    Result result = ${tableNameFormatOnCase}Service.deleteById(id);
-    if (result.isSuccess()) {
-        json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
-        json.setStatus(ViewMsgConstant.SUCCEED_CODE);
-    } else {
-        json.setStatus(ViewMsgConstant.DEFEATED_CODE);
-        json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
-    }
-    } catch (Exception e) {
-        json.setStatus(ViewMsgConstant.DEFEATED_CODE);
-        json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
-        logger.warn("errorcode " + ViewMsgConstant.DELETE_DEFEATED);
-        logger.error(e.getMessage());
-    }
-    return JSONArray.fromObject(json).toString();
+        ReturnJsonVO json = new ReturnJsonVO();
+        try {
+            Result result = ${tableNameFormatOnCase}Service.deleteById(id);
+            if (result.isSuccess()) {
+                json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
+                json.setStatus(ViewMsgConstant.SUCCEED_CODE);
+            } else {
+                json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+                json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
+            }
+        } catch (Exception e) {
+            json.setStatus(ViewMsgConstant.DEFEATED_CODE);
+            json.setMessage(ViewMsgConstant.DELETE_DEFEATED);
+            logger.warn("errorcode " + ViewMsgConstant.DELETE_DEFEATED);
+            logger.error(e.getMessage());
+        }
+        return JSONArray.fromObject(json).toString();
     }
 
     /**
     * @Description: 详情页面
     * @param request 请求头
-    * @param id 实体id
+    * @param query 查询对象
     * @param model 模型
     * @return
     */
     @RequestMapping(value = "/detailView")
-    public String detailView(HttpServletRequest request, Long id, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(id);
+    public String detailView(HttpServletRequest request, ${tableNameFormat}Query query, Model model) {
+        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(query);
         model.addAttribute("${tableNameFormatOnCase}",singleResult.getResult() );
         return PARENT_URL + "/detail";
-        }
+    }
 }

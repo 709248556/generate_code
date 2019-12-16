@@ -33,7 +33,7 @@ public interface ${tableNameFormat}Dao {
 	List<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query);
 
     /**
-    * 根据id查询
+    * 单个查询
     */
-    ${tableNameFormat}DTO querySingle(Long id);
+    ${tableNameFormat}DTO querySingle(${tableNameFormat}Query query);
 }

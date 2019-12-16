@@ -153,6 +153,32 @@
                 });
             }
         }
+
+        //冻结
+        function freeze${tableNameFormat}() {
+            var id = ItemCheck_ID();
+            if(id){
+                parent.layer.confirm('您确定要冻结选择的数据吗?请谨慎操作!', {
+                    icon: 3,
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    AjaxConfirm("post","<#noparse>${ctx}</#noparse>${URL}/freeze${tableNameFormat}?id=" + id);
+                });
+            }
+        }
+
+        //解冻
+        function thaw${tableNameFormat}() {
+            var id = ItemCheck_ID();
+            if(id){
+                parent.layer.confirm('您确定要解冻选择的数据吗?请谨慎操作!', {
+                    icon: 3,
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    AjaxConfirm("post","<#noparse>${ctx}</#noparse>${URL}/thaw${tableNameFormat}?id=" + id);
+                });
+            }
+        }
         parent.layer.close(parent.all_parent_load);
 	</script>
 	</body>
