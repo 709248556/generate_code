@@ -61,32 +61,32 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
     @Override
     public QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query) {
         QueryResult<${tableNameFormat}DTO> result = new QueryResult<${tableNameFormat}DTO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
-            List<${tableNameFormat}DTO> list = null;
-            try {
-                if (query.getFlag()) {
-                    PageHelper.startPage(query.getPageNum(), query.getPageSize());
-                }
-                list = ${tableNameFormatOnCase}Dao.queryList(query);
-                result.setSuccess(true);
-                result.setResults(list);
-                result.setErrorCode(ResponseEnum.CODE_0000.getCode());
-                } catch (Exception e) {
-                    logger.info("${tableNameFormat}ServiceImpl.queryList error: {}", e.toString());
-                }
+        List<${tableNameFormat}DTO> list = null;
+        try {
+            if (query.getFlag()) {
+                PageHelper.startPage(query.getPageNum(), query.getPageSize());
+            }
+            list = ${tableNameFormatOnCase}Dao.queryList(query);
+            result.setSuccess(true);
+            result.setResults(list);
+            result.setErrorCode(ResponseEnum.CODE_0000.getCode());
+        } catch (Exception e) {
+            logger.info("${tableNameFormat}ServiceImpl.queryList error: {}", e.toString());
+        }
         return result;
     }
 
     @Override
     public SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query) {
         SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
-            try {
-                ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(query);
-                result.setSuccess(true);
-                result.setResult(${tableNameFormatOnCase}DTO);
-                result.setErrorCode(ResponseEnum.CODE_0000.getCode());
-            } catch (Exception e) {
-                logger.info("${tableNameFormat}ServiceImpl.getSingleById error: {}", e.toString());
-            }
+        try {
+            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(query);
+            result.setSuccess(true);
+            result.setResult(${tableNameFormatOnCase}DTO);
+            result.setErrorCode(ResponseEnum.CODE_0000.getCode());
+        } catch (Exception e) {
+            logger.info("${tableNameFormat}ServiceImpl.getSingleById error: {}", e.toString());
+        }
         return result;
     }
 }
