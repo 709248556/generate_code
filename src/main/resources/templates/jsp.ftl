@@ -140,7 +140,9 @@
         }
         function edit() {
             var id = ItemCheck_ID();
-            layerOpen("编辑","/editView?id="+id);
+            if(id){
+                layerOpen("编辑","/editView?id="+id);
+			}
         }
         function delete${tableNameFormat}() {
             var id = ItemCheck_ID();
