@@ -7,22 +7,22 @@ import com.github.pagehelper.PageHelper;
 import com.zfull.commons.enums.ResponseEnum;
 
 /**
- * @ClassName: ${tableNameFormat}ServiceImpl.java
+ * @ClassName: LiquidationHisServiceImpl.java
  * @Description:
  * @author yanlianglong
- * @date ${.now?date}
+ * @date 2019-12-26
  */
-@Service("${tableNameFormatOnCase}Service")
-public class ${tableNameFormat}ServiceImpl extends GenericService implements ${tableNameFormat}Service{
+@Service("liquidationHisService")
+public class LiquidationHisServiceImpl extends GenericService implements LiquidationHisService{
 
     @Autowired
-    private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
+    private LiquidationHisDao liquidationHisDao;
 
 	@Override
-	public Result insert(${tableNameFormat}DTO record) {
+	public Result insert(LiquidationHisDTO record) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.insert(record);
+            liquidationHisDao.insert(record);
     		result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -35,7 +35,7 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	public Result deleteById(Long id) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.deleteById(id);
+            liquidationHisDao.deleteById(id);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -46,10 +46,10 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 
 
 	@Override
-	public Result update(${tableNameFormat}DTO record) {
+	public Result update(LiquidationHisDTO record) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.update(record);
+            liquidationHisDao.update(record);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -59,33 +59,33 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	}
 
     @Override
-    public QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query) {
-        QueryResult<${tableNameFormat}DTO> result = new QueryResult<${tableNameFormat}DTO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
-        List<${tableNameFormat}DTO> list = null;
+    public QueryResult<LiquidationHisDTO> queryList(LiquidationHisQuery query) {
+        QueryResult<LiquidationHisDTO> result = new QueryResult<LiquidationHisDTO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
+        List<LiquidationHisDTO> list = null;
         try {
             if (query.getFlag()) {
                 PageHelper.startPage(query.getPageNum(), query.getPageSize());
             }
-            list = ${tableNameFormatOnCase}Dao.queryList(query);
+            list = liquidationHisDao.queryList(query);
             result.setSuccess(true);
             result.setResults(list);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());
         } catch (Exception e) {
-            logger.info("${tableNameFormat}ServiceImpl.queryList error: {}", e);
+            logger.info("LiquidationHisServiceImpl.queryList error: {}", e.toString());
         }
         return result;
     }
 
     @Override
-    public SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query) {
-        SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
+    public SingleResult<LiquidationHisDTO> querySingle(LiquidationHisQuery query) {
+        SingleResult<LiquidationHisDTO> result = new SingleResult<>();
         try {
-            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(query);
+            LiquidationHisDTO liquidationHisDTO = liquidationHisDao.querySingle(query);
             result.setSuccess(true);
-            result.setResult(${tableNameFormatOnCase}DTO);
+            result.setResult(liquidationHisDTO);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());
         } catch (Exception e) {
-            logger.info("${tableNameFormat}ServiceImpl.getSingleById error: {}", e);
+            logger.info("LiquidationHisServiceImpl.getSingleById error: {}", e.toString());
         }
         return result;
     }

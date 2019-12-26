@@ -14,7 +14,6 @@ public class ${tableNameFormat}DTO implements Serializable{
 	private static final long serialVersionUID = ${serialVersionUID1?c}L ;
 <#list baseResultMapVoList as baseResultMapVo >
 	<#if baseResultMapVo.DTOType =="Date">
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 	<#else>
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};

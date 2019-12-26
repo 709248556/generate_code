@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/css/main.css">
 	<link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/lib/select2/select2.min.css">
 	<link rel="stylesheet" href="<#noparse>${ctx}</#noparse>/static/img/splashy/splashy.css">
+	<link href="<#noparse>${ctx}</#noparse>/static/lib/layui/css/layui.css" rel="stylesheet" />
 	<link href="<#noparse>${ctx}</#noparse>/static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript">
       //将当前操制器名赋到js变量

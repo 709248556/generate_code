@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zfull.service.webbusiness.dao.">
+
+    <sql id="Base_Column_List">
+                lh.Fliquidation_id AS liquidationId,
+        lh.Forder_id AS orderId,
+        lh.Faccount_id AS accountId,
+        lh.Faccount_code AS accountCode,
+        lh.Faccount_name AS accountName,
+        lh.Fterm_code AS termCode,
+        lh.Faccount_type AS accountType,
+        lh.Forgan_level AS organLevel,
+        lh.Forgan_id AS organId,
+        lh.Fproduct_id AS productId,
+        lh.Ftrans_type AS transType,
+        lh.Ftrans_kind AS transKind,
+        lh.Fclear_type AS clearType,
+        lh.Ffee_type AS feeType,
+        lh.Fcash_type AS cashType,
+        lh.Fcash_account_id AS cashAccountId,
+        lh.Fcard_no AS cardNo,
+        lh.Fclear_state AS clearState,
+        lh.Fclear_date AS clearDate,
+        lh.Fsettle_period AS settlePeriod,
+        lh.Fcreate_time AS createTime,
+        lh.Forder_time AS orderTime,
+        lh.Fclear_time AS clearTime,
+        lh.Famount AS amount,
+        lh.Forg_amount AS orgAmount,
+        lh.Faccount_rate AS accountRate,
+        lh.Faccount_fee AS accountFee,
+        lh.Forgan2_id AS organ2Id,
+        lh.Forgan2_rate AS organ2Rate,
+        lh.Forgan2_fee AS organ2Fee,
+        lh.Forgan1_id AS organ1Id,
+        lh.Forgan1_rate AS organ1Rate,
+        lh.Forgan1_fee AS organ1Fee,
+        lh.Fgorgan_id AS gorganId,
+        lh.Fgorgan_fee AS gorganFee,
+        lh.Fchannel_id AS channelId,
+        lh.Fchannel_rate AS channelRate,
+        lh.Fchannel_cost AS channelCost,
+        lh.Fsettle_flag AS settleFlag,
+        lh.Fsettle_batchno AS settleBatchno,
+        lh.Faffiliate_trans_flag AS affiliateTransFlag,
+        lh.Fext_field1 AS extField1,
+        lh.Fext_field2 AS extField2,
+        lh.Fext_field3 AS extField3,
+        lh.Fext_field4 AS extField4,
+        lh.Fsplit_column AS splitColumn
+    </sql>
+
+    <insert id="insert" parameterType="LiquidationHisDTO">
+        INSERT INTO t_liquidation_his
+        ( 
+        Fliquidation_id,
+        Forder_id,
+        Faccount_id,
+        Faccount_code,
+        Faccount_name,
+        Fterm_code,
+        Faccount_type,
+        Forgan_level,
+        Forgan_id,
+        Fproduct_id,
+        Ftrans_type,
+        Ftrans_kind,
+        Fclear_type,
+        Ffee_type,
+        Fcash_type,
+        Fcash_account_id,
+        Fcard_no,
+        Fclear_state,
+        Fclear_date,
+        Fsettle_period,
+        Fcreate_time,
+        Forder_time,
+        Fclear_time,
+        Famount,
+        Forg_amount,
+        Faccount_rate,
+        Faccount_fee,
+        Forgan2_id,
+        Forgan2_rate,
+        Forgan2_fee,
+        Forgan1_id,
+        Forgan1_rate,
+        Forgan1_fee,
+        Fgorgan_id,
+        Fgorgan_fee,
+        Fchannel_id,
+        Fchannel_rate,
+        Fchannel_cost,
+        Fsettle_flag,
+        Fsettle_batchno,
+        Faffiliate_trans_flag,
+        Fext_field1,
+        Fext_field2,
+        Fext_field3,
+        Fext_field4,
+        Fsplit_column
+        )
+        VALUES
+        (
+        #{liquidationId},
+        #{orderId},
+        #{accountId},
+        #{accountCode},
+        #{accountName},
+        #{termCode},
+        #{accountType},
+        #{organLevel},
+        #{organId},
+        #{productId},
+        #{transType},
+        #{transKind},
+        #{clearType},
+        #{feeType},
+        #{cashType},
+        #{cashAccountId},
+        #{cardNo},
+        #{clearState},
+        #{clearDate},
+        #{settlePeriod},
+        #{createTime},
+        #{orderTime},
+        #{clearTime},
+        #{amount},
+        #{orgAmount},
+        #{accountRate},
+        #{accountFee},
+        #{organ2Id},
+        #{organ2Rate},
+        #{organ2Fee},
+        #{organ1Id},
+        #{organ1Rate},
+        #{organ1Fee},
+        #{gorganId},
+        #{gorganFee},
+        #{channelId},
+        #{channelRate},
+        #{channelCost},
+        #{settleFlag},
+        #{settleBatchno},
+        #{affiliateTransFlag},
+        #{extField1},
+        #{extField2},
+        #{extField3},
+        #{extField4},
+        #{splitColumn}
+        )
+    </insert>
+
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM t_liquidation_his
+        where Forder_id =  #{orderId}
+    </delete>
+
+    <update id="update" parameterType="LiquidationHisDTO">
+        update t_liquidation_his
+        <set>
+            <if test="liquidationId != null">
+                Fliquidation_id = #{liquidationId},
+            </if>
+            <if test=" orderId != null and orderId !=''">
+                Forder_id =#{orderId},
+            </if>
+            <if test="accountId != null">
+                Faccount_id = #{accountId},
+            </if>
+            <if test=" accountCode != null and accountCode !=''">
+                Faccount_code =#{accountCode},
+            </if>
+            <if test=" accountName != null and accountName !=''">
+                Faccount_name =#{accountName},
+            </if>
+            <if test=" termCode != null and termCode !=''">
+                Fterm_code =#{termCode},
+            </if>
+            <if test=" accountType != null and accountType !=''">
+                Faccount_type =#{accountType},
+            </if>
+            <if test=" organLevel != null and organLevel !=''">
+                Forgan_level =#{organLevel},
+            </if>
+            <if test="organId != null">
+                Forgan_id = #{organId},
+            </if>
+            <if test="productId != null">
+                Fproduct_id = #{productId},
+            </if>
+            <if test=" transType != null and transType !=''">
+                Ftrans_type =#{transType},
+            </if>
+            <if test=" transKind != null and transKind !=''">
+                Ftrans_kind =#{transKind},
+            </if>
+            <if test=" clearType != null and clearType !=''">
+                Fclear_type =#{clearType},
+            </if>
+            <if test=" feeType != null and feeType !=''">
+                Ffee_type =#{feeType},
+            </if>
+            <if test=" cashType != null and cashType !=''">
+                Fcash_type =#{cashType},
+            </if>
+            <if test="cashAccountId != null">
+                Fcash_account_id = #{cashAccountId},
+            </if>
+            <if test=" cardNo != null and cardNo !=''">
+                Fcard_no =#{cardNo},
+            </if>
+            <if test=" clearState != null and clearState !=''">
+                Fclear_state =#{clearState},
+            </if>
+            <if test=" clearDate != null and clearDate !=''">
+                Fclear_date =#{clearDate},
+            </if>
+            <if test=" settlePeriod != null and settlePeriod !=''">
+                Fsettle_period =#{settlePeriod},
+            </if>
+            <if test="createTime != null">
+                Fcreate_time = #{createTime},
+            </if>
+            <if test="orderTime != null">
+                Forder_time = #{orderTime},
+            </if>
+            <if test="clearTime != null">
+                Fclear_time = #{clearTime},
+            </if>
+            <if test="amount != null">
+                Famount = #{amount},
+            </if>
+            <if test="orgAmount != null">
+                Forg_amount = #{orgAmount},
+            </if>
+            <if test=" accountRate != null and accountRate !=''">
+                Faccount_rate =#{accountRate},
+            </if>
+            <if test=" accountFee != null and accountFee !=''">
+                Faccount_fee =#{accountFee},
+            </if>
+            <if test="organ2Id != null">
+                Forgan2_id = #{organ2Id},
+            </if>
+            <if test=" organ2Rate != null and organ2Rate !=''">
+                Forgan2_rate =#{organ2Rate},
+            </if>
+            <if test="organ2Fee != null">
+                Forgan2_fee = #{organ2Fee},
+            </if>
+            <if test="organ1Id != null">
+                Forgan1_id = #{organ1Id},
+            </if>
+            <if test=" organ1Rate != null and organ1Rate !=''">
+                Forgan1_rate =#{organ1Rate},
+            </if>
+            <if test="organ1Fee != null">
+                Forgan1_fee = #{organ1Fee},
+            </if>
+            <if test="gorganId != null">
+                Fgorgan_id = #{gorganId},
+            </if>
+            <if test="gorganFee != null">
+                Fgorgan_fee = #{gorganFee},
+            </if>
+            <if test="channelId != null">
+                Fchannel_id = #{channelId},
+            </if>
+            <if test=" channelRate != null and channelRate !=''">
+                Fchannel_rate =#{channelRate},
+            </if>
+            <if test="channelCost != null">
+                Fchannel_cost = #{channelCost},
+            </if>
+            <if test=" settleFlag != null and settleFlag !=''">
+                Fsettle_flag =#{settleFlag},
+            </if>
+            <if test=" settleBatchno != null and settleBatchno !=''">
+                Fsettle_batchno =#{settleBatchno},
+            </if>
+            <if test=" affiliateTransFlag != null and affiliateTransFlag !=''">
+                Faffiliate_trans_flag =#{affiliateTransFlag},
+            </if>
+            <if test=" extField1 != null and extField1 !=''">
+                Fext_field1 =#{extField1},
+            </if>
+            <if test=" extField2 != null and extField2 !=''">
+                Fext_field2 =#{extField2},
+            </if>
+            <if test=" extField3 != null and extField3 !=''">
+                Fext_field3 =#{extField3},
+            </if>
+            <if test=" extField4 != null and extField4 !=''">
+                Fext_field4 =#{extField4},
+            </if>
+            <if test="splitColumn != null">
+                Fsplit_column = #{splitColumn},
+            </if>
+        </set>
+        where Forder_id =  #{orderId}
+    </update>
+
+    <select id="queryList" resultType="LiquidationHisDTO" parameterType="LiquidationHisQuery">
+        select <include refid="Base_Column_List"/> from t_liquidation_his lh
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="liquidationId != null">
+                AND lh.Fliquidation_id = #{liquidationId}
+            </if>
+            <if test="orderId != null and orderId !=''">
+                AND lh.Forder_id =#{orderId}
+            </if>
+            <if test="accountId != null">
+                AND lh.Faccount_id = #{accountId}
+            </if>
+            <if test="accountCode != null and accountCode !=''">
+                AND lh.Faccount_code =#{accountCode}
+            </if>
+            <if test="accountName != null and accountName !=''">
+                AND lh.Faccount_name =#{accountName}
+            </if>
+            <if test="termCode != null and termCode !=''">
+                AND lh.Fterm_code =#{termCode}
+            </if>
+            <if test="accountType != null and accountType !=''">
+                AND lh.Faccount_type =#{accountType}
+            </if>
+            <if test="organLevel != null and organLevel !=''">
+                AND lh.Forgan_level =#{organLevel}
+            </if>
+            <if test="organId != null">
+                AND lh.Forgan_id = #{organId}
+            </if>
+            <if test="productId != null">
+                AND lh.Fproduct_id = #{productId}
+            </if>
+            <if test="transType != null and transType !=''">
+                AND lh.Ftrans_type =#{transType}
+            </if>
+            <if test="transKind != null and transKind !=''">
+                AND lh.Ftrans_kind =#{transKind}
+            </if>
+            <if test="clearType != null and clearType !=''">
+                AND lh.Fclear_type =#{clearType}
+            </if>
+            <if test="feeType != null and feeType !=''">
+                AND lh.Ffee_type =#{feeType}
+            </if>
+            <if test="cashType != null and cashType !=''">
+                AND lh.Fcash_type =#{cashType}
+            </if>
+            <if test="cashAccountId != null">
+                AND lh.Fcash_account_id = #{cashAccountId}
+            </if>
+            <if test="cardNo != null and cardNo !=''">
+                AND lh.Fcard_no =#{cardNo}
+            </if>
+            <if test="clearState != null and clearState !=''">
+                AND lh.Fclear_state =#{clearState}
+            </if>
+            <if test="clearDate != null and clearDate !=''">
+                AND lh.Fclear_date =#{clearDate}
+            </if>
+            <if test="settlePeriod != null and settlePeriod !=''">
+                AND lh.Fsettle_period =#{settlePeriod}
+            </if>
+            <if test="createTime != null">
+                AND lh.Fcreate_time = #{createTime}
+            </if>
+            <if test="orderTime != null">
+                AND lh.Forder_time = #{orderTime}
+            </if>
+            <if test="clearTime != null">
+                AND lh.Fclear_time = #{clearTime}
+            </if>
+            <if test="amount != null">
+                AND lh.Famount = #{amount}
+            </if>
+            <if test="orgAmount != null">
+                AND lh.Forg_amount = #{orgAmount}
+            </if>
+            <if test="accountRate != null and accountRate !=''">
+                AND lh.Faccount_rate =#{accountRate}
+            </if>
+            <if test="accountFee != null and accountFee !=''">
+                AND lh.Faccount_fee =#{accountFee}
+            </if>
+            <if test="organ2Id != null">
+                AND lh.Forgan2_id = #{organ2Id}
+            </if>
+            <if test="organ2Rate != null and organ2Rate !=''">
+                AND lh.Forgan2_rate =#{organ2Rate}
+            </if>
+            <if test="organ2Fee != null">
+                AND lh.Forgan2_fee = #{organ2Fee}
+            </if>
+            <if test="organ1Id != null">
+                AND lh.Forgan1_id = #{organ1Id}
+            </if>
+            <if test="organ1Rate != null and organ1Rate !=''">
+                AND lh.Forgan1_rate =#{organ1Rate}
+            </if>
+            <if test="organ1Fee != null">
+                AND lh.Forgan1_fee = #{organ1Fee}
+            </if>
+            <if test="gorganId != null">
+                AND lh.Fgorgan_id = #{gorganId}
+            </if>
+            <if test="gorganFee != null">
+                AND lh.Fgorgan_fee = #{gorganFee}
+            </if>
+            <if test="channelId != null">
+                AND lh.Fchannel_id = #{channelId}
+            </if>
+            <if test="channelRate != null and channelRate !=''">
+                AND lh.Fchannel_rate =#{channelRate}
+            </if>
+            <if test="channelCost != null">
+                AND lh.Fchannel_cost = #{channelCost}
+            </if>
+            <if test="settleFlag != null and settleFlag !=''">
+                AND lh.Fsettle_flag =#{settleFlag}
+            </if>
+            <if test="settleBatchno != null and settleBatchno !=''">
+                AND lh.Fsettle_batchno =#{settleBatchno}
+            </if>
+            <if test="affiliateTransFlag != null and affiliateTransFlag !=''">
+                AND lh.Faffiliate_trans_flag =#{affiliateTransFlag}
+            </if>
+            <if test="extField1 != null and extField1 !=''">
+                AND lh.Fext_field1 =#{extField1}
+            </if>
+            <if test="extField2 != null and extField2 !=''">
+                AND lh.Fext_field2 =#{extField2}
+            </if>
+            <if test="extField3 != null and extField3 !=''">
+                AND lh.Fext_field3 =#{extField3}
+            </if>
+            <if test="extField4 != null and extField4 !=''">
+                AND lh.Fext_field4 =#{extField4}
+            </if>
+            <if test="splitColumn != null">
+                AND lh.Fsplit_column = #{splitColumn}
+            </if>
+        </trim>
+    </select>
+
+    <select id="querySingle" resultType="LiquidationHisDTO" parameterType="LiquidationHisQuery">
+        select <include refid="Base_Column_List"/> from t_liquidation_his lh
+        where lh.Forder_id =  #{orderId}
+    </select>
+</mapper>
