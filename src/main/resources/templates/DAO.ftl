@@ -3,13 +3,13 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * @ClassName: ${tableNameFormat}Dao
+ * @ClassName: ${tableNameFormat}HandleDao
  * @Description:
  * @author yanlianglong
  * @date ${.now?date}
  */
 @Mapper
-public interface ${tableNameFormat}Dao {
+public interface ${tableNameFormat}HandleDao {
 
     /**
      * 新增

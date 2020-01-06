@@ -17,12 +17,14 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 
     @Autowired
     private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
+    @Autowired
+    private ${tableNameFormat}HandleDao ${tableNameFormatOnCase}HandleDao;
 
 	@Override
 	public Result insert(${tableNameFormat}DTO record) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.insert(record);
+            ${tableNameFormatOnCase}HandleDao.insertSelective(record);
     		result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -35,7 +37,10 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	public Result deleteById(Long id) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.deleteById(id);
+            ${tableNameFormat}Example example = new ${tableNameFormat}Example();
+            ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
+			criteria.andNoticeIdEqualTo(noticeId);
+            ${tableNameFormatOnCase}HandleDao.deleteByExample(id);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -49,7 +54,7 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	public Result update(${tableNameFormat}DTO record) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.update(record);
+            ${tableNameFormatOnCase}HandleDao.update(record);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -66,7 +71,7 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
             if (query.getFlag()) {
                 PageHelper.startPage(query.getPageNum(), query.getPageSize());
             }
-            list = ${tableNameFormatOnCase}Dao.queryList(query);
+            list = ${tableNameFormatOnCase}HandleDao.queryList(query);
             result.setSuccess(true);
             result.setResults(list);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());
@@ -80,7 +85,7 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
     public SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query) {
         SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
         try {
-            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(query);
+            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}HandleDao.querySingle(query);
             result.setSuccess(true);
             result.setResult(${tableNameFormatOnCase}DTO);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());
