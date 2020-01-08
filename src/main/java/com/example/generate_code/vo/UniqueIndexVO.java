@@ -10,6 +10,15 @@ package com.example.generate_code.vo;
 public class UniqueIndexVO {
     private String dataColumnName;
     private String dataColumnNameFormat;
+    private String dataColumnNameFormatUpperCase;
+
+    public String getDataColumnNameFormatUpperCase() {
+        return dataColumnNameFormatUpperCase;
+    }
+
+    public void setDataColumnNameFormatUpperCase(String dataColumnNameFormatUpperCase) {
+        this.dataColumnNameFormatUpperCase = dataColumnNameFormatUpperCase;
+    }
 
     public String getDataColumnName() {
         return dataColumnName;

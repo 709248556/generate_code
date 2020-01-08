@@ -16,9 +16,9 @@ public interface ${tableNameFormat}Service {
      Result insert(${tableNameFormat}DTO record);
 
     /**
-     * 根据Id删除
+     * 删除
      */
-    Result deleteById(Long id);
+    Result delete(Long id);
 
     /**
      * 编辑

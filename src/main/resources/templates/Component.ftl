@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 /**
- * @ClassName: ${tableNameFormat}ServiceImpl.java
+ * @ClassName: ${tableNameFormat}Component.java
  * @Description:
  * @author yanlianglong
  * @date ${.now?date}
@@ -22,10 +22,10 @@ public class ${tableNameFormat}Component {
     @Autowired
     private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
 
-	public Result insert(${tableNameFormat}DTO example) {
+	public Result insert(${tableNameFormat}DTO ${tableNameFormatOnCase}) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}Dao.insert(example);
+            ${tableNameFormatOnCase}Dao.insert(${tableNameFormatOnCase});
     		result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);

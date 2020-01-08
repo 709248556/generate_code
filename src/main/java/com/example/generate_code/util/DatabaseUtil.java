@@ -17,9 +17,9 @@ public class DatabaseUtil {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     //todo
 //    private static final String URL = "jdbc:mysql://10.252.2.40:3306/zfdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull";
-    private static final String URL = "jdbc:mysql://10.252.2.41:3306/zfdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false";
-    private static final String USERNAME = "zfuser";
-    private static final String PASSWORD = "zfuser!Q2w3e4r";
+    private static final String URL = "jdbc:mysql://10.252.1.187:3306/smartdhdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull";
+    private static final String USERNAME = "smartdhuser";
+    private static final String PASSWORD = "smartdhuser!Q2w3e4r";
 
     private static final String SQL = "SELECT * FROM ";// 数据库操作
 
@@ -236,13 +236,13 @@ public class DatabaseUtil {
     public static void main(String[] args) {
         List<String> tableNames = getTableNames();
         System.out.println("tableNames:" + tableNames);
-//        for (String tableName : tableNames) {
+        for (String tableName : tableNames) {
 //            System.out.println("tableName:" + tableName);
 //            System.out.println("ColumnNames:" + getColumnNames(tableName));
 //            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
 //            System.out.println("ColumnComments:" + getColumnComments(tableName));
-//            System.out.println("IndexInfo:" + getIndexInfo(tableName));
-//        }
+            System.out.println("IndexInfo:" + getIndexInfo(tableName));
+        }
     }
 
     public static List<Map<String, String>> getMapList() {
@@ -287,10 +287,12 @@ public class DatabaseUtil {
         List<UniqueIndexVO> uniqueIndexVoList = new ArrayList<>();
         List<String> dataColumnNameList = getIndexInfo(tableName);
         List<String> dataColumnNameFormatList = FormatUtil.columnNames(getIndexInfo(tableName));
+        List<String> dataColumnNameFormatUpperCaseList = FormatUtil.columnNamesUpperCase(getIndexInfo(tableName));
         for (int i = 0; i < dataColumnNameList.size(); i++) {
             UniqueIndexVO uniqueIndexVO = new UniqueIndexVO();
             uniqueIndexVO.setDataColumnName(dataColumnNameList.get(i));
             uniqueIndexVO.setDataColumnNameFormat(dataColumnNameFormatList.get(i));
+            uniqueIndexVO.setDataColumnNameFormatUpperCase(dataColumnNameFormatUpperCaseList.get(i));
             uniqueIndexVoList.add(uniqueIndexVO);
         }
         return uniqueIndexVoList;

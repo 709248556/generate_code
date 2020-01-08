@@ -30,7 +30,7 @@ public interface ${tableNameFormat}HandleDao {
     /**
      * 查询
      */
-	List<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query);
+	List<${tableNameFormat}VO> queryList(${tableNameFormat}Query query);
 
     /**
     * 单个查询

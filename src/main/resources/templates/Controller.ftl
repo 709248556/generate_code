@@ -33,15 +33,20 @@ public class ${tableNameFormat}Controller extends BaseController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String indexView(Model model, HttpServletRequest request, ${tableNameFormat}Query query) {
-		QueryResult<${tableNameFormat}DTO> result = ${tableNameFormatOnCase}Service.queryList(query);
-        <#list searchVos as searchVo >
-        <#if searchVo.type == "select">
-        model.addAttribute("${searchVo.items}", ${searchVo.items}.values());
-        </#if></#list>
-        model.addAttribute("source", result);
-        model.addAttribute("query", query);
-        model.addAttribute("menuRight", menuRight(PARENT_URL));
-        model.addAttribute("searchParams", searchParams(query));
+        try {
+            QueryResult<${tableNameFormat}DTO> result = ${tableNameFormatOnCase}Service.queryList(query);
+            <#list searchVos as searchVo >
+            <#if searchVo.type == "select">
+            model.addAttribute("${searchVo.items}", ${searchVo.items}.values());
+            </#if></#list>
+            model.addAttribute("source", result);
+            model.addAttribute("query", query);
+            model.addAttribute("menuRight", menuRight(PARENT_URL));
+            model.addAttribute("searchParams", searchParams(query));
+        }catch (Exception e) {
+            log.error("系统异常");
+            log.error(e.getMessage());
+        }
         return PARENT_URL + "/index";
     }
 
@@ -193,10 +198,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     */
     @ResponseBody
     @PostMapping(value = "/delete${tableNameFormat}")
-    public String deleteNotice(HttpServletRequest request, Long id, Model model) {
+    public String delete(HttpServletRequest request, Long id, Model model) {
         ReturnJsonVO json = new ReturnJsonVO();
         try {
-            Result result = ${tableNameFormatOnCase}Service.deleteById(id);
+            Result result = ${tableNameFormatOnCase}Service.delete(id);
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);

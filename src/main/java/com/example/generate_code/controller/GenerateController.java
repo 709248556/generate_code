@@ -20,13 +20,13 @@ import freemarker.template.Template;
 
 
 @RestController
-public class GenerateController {
+  public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
 //    private static final String PARENT_URL = "card";   //todo
-    private static final String TABLE_NAME = "bz_report_log"; //todo
-    private static final  int TABLE_PREFIX_LENGTH = 2;
+    private static final String TABLE_NAME = "bz_dining_type"; //todo
+    private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
     private static final String SELECT = "select";
@@ -89,12 +89,13 @@ public class GenerateController {
             dataMap.put("URL",FormatUtil._splitOnCase(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
 //            dataMap.put("URL",FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("fristColumnName",FormatUtil.columnNames(DatabaseUtil.getColumnNames(TABLE_NAME)).get(0));//第一个字段名areaId
+            dataMap.put("fristColumnNameUpperCase",FormatUtil.columnNamesUpperCase(DatabaseUtil.getColumnNames(TABLE_NAME)).get(0));//第一个字段名AreaId
             //jsp数据
             getJspDateMap(dataMap);
 
             // step5 生成数据
             File xmlFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Handle-Mapper.xml");//TODO
-            File DTOFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"DTO.java");
+            File DTOFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"VO.java");
             File queryFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Query.java");
             File DAOFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"HandleDao.java");
             File serviceFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");

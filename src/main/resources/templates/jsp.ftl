@@ -33,7 +33,7 @@
 		<div class="search_box">
 			<form method="get" id="SearchF" action="<#noparse>${ctx}</#noparse>${URL}">
 				<div class="search_nav">
-					<ul>//2
+					<ul>
 						<#list searchVos as searchVo >
 						<#if searchVo.type == "input">
 						<input class="inputtext" id="${searchVo.name}" name="${searchVo.name}" placeholder="${searchVo.placeholder}" value="<#noparse>${query.</#noparse>${searchVo.name}}"/>
@@ -65,7 +65,7 @@
 					<div class="tablelist_thead">
 						<table>
 							<tbody>
-								<tr>//3
+								<tr>
                                     <th width="50">操作</th>
                                     <th width="50">功能</th>
                                     <#list baseResultMapVoList as baseResultMapVo >
@@ -80,7 +80,7 @@
 					<table>
 						<tbody>
 							<c:forEach items="<#noparse>${source.results}</#noparse>" var="entity">
-							<tr>//4
+							<tr>
                                 <td class="notitle">
                                     <input name="Item_Check" type="checkbox" value="<#noparse>${entity.</#noparse>${fristColumnName}}" />
                                 </td>

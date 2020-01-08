@@ -17,14 +17,12 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 
     @Autowired
     private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
-    @Autowired
-    private ${tableNameFormat}HandleDao ${tableNameFormatOnCase}HandleDao;
 
 	@Override
 	public Result insert(${tableNameFormat}DTO record) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}HandleDao.insertSelective(record);
+            ${tableNameFormatOnCase}Dao.insertSelective(record);
     		result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -34,13 +32,13 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	}
 
     @Override
-	public Result deleteById(Long id) {
+	public Result delete(Long id) {
 		Result result = new Result();
         try {
             ${tableNameFormat}Example example = new ${tableNameFormat}Example();
             ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
-			criteria.andNoticeIdEqualTo(noticeId);
-            ${tableNameFormatOnCase}HandleDao.deleteByExample(id);
+			criteria.and${fristColumnNameUpperCase}EqualTo(id);
+            ${tableNameFormatOnCase}Dao.deleteByExample(example);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -51,10 +49,13 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 
 
 	@Override
-	public Result update(${tableNameFormat}DTO record) {
+	public Result update(${tableNameFormat}DTO ${tableNameFormatOnCase}) {
 		Result result = new Result();
         try {
-            ${tableNameFormatOnCase}HandleDao.update(record);
+            ${tableNameFormat}Example example = new ${tableNameFormat}Example();
+            ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
+            criteria.and${fristColumnNameUpperCase}EqualTo(${tableNameFormatOnCase}.get${fristColumnNameUpperCase}());
+            ${tableNameFormatOnCase}Dao.updateByExampleSelective(${tableNameFormatOnCase},example);
             result.setSuccess(true);
         } catch (Exception e) {
             result.setSuccess(false);
@@ -71,7 +72,10 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
             if (query.getFlag()) {
                 PageHelper.startPage(query.getPageNum(), query.getPageSize());
             }
-            list = ${tableNameFormatOnCase}HandleDao.queryList(query);
+            ${tableNameFormat}Example example = new ${tableNameFormat}Example();
+            ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
+
+            list = ${tableNameFormatOnCase}Dao.selectByExample(example);
             result.setSuccess(true);
             result.setResults(list);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());
@@ -85,12 +89,22 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
     public SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query) {
         SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
         try {
-            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}HandleDao.querySingle(query);
-            result.setSuccess(true);
-            result.setResult(${tableNameFormatOnCase}DTO);
-            result.setErrorCode(ResponseEnum.CODE_0000.getCode());
+            ${tableNameFormat}Example example = new ${tableNameFormat}Example();
+            ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
+            criteria.and${fristColumnNameUpperCase}EqualTo(query.get${fristColumnNameUpperCase}());
+
+            List<${tableNameFormat}DTO> list = ${tableNameFormatOnCase}Dao.selectByExample(example);
+            if (list != null && list.size() == 1){
+                result.setSuccess(true);
+                result.setResult(list.get(0));
+                result.setErrorCode(ResponseEnum.CODE_0000.getCode());
+            }else {
+                result.setSuccess(false);
+                result.setErrorCode(ResponseEnum.CODE_9999.getCode());
+            }
+
         } catch (Exception e) {
-            logger.info("${tableNameFormat}ServiceImpl.getSingleById error: {}", e);
+            logger.info("${tableNameFormat}ServiceImpl.getSingle error: {}", e);
         }
         return result;
     }

@@ -49,7 +49,7 @@
         where <#list uniqueIndexVOList as uniqueIndexVo ><#if uniqueIndexVo_has_next>${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}} and <#else>${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}}</#if></#list>
     </update>
 
-    <select id="queryList" resultType="${tableNameFormat}DTO" parameterType="${tableNameFormat}Query">
+    <select id="queryList" resultType="${tableNameFormat}VO" parameterType="${tableNameFormat}Query">
         select <include refid="Base_Column_List"/> from ${tableName} ${tableShortName}
         <trim prefix="WHERE" prefixOverrides="AND">
         <#list baseResultMapVoList as baseResultMapVo >
@@ -70,7 +70,7 @@
         </trim>
     </select>
 
-    <select id="querySingle" resultType="${tableNameFormat}DTO" parameterType="${tableNameFormat}Query">
+    <select id="querySingle" resultType="${tableNameFormat}VO" parameterType="${tableNameFormat}Query">
         select <include refid="Base_Column_List"/> from ${tableName} ${tableShortName}
         where <#list uniqueIndexVOList as uniqueIndexVo ><#if uniqueIndexVo_has_next>${tableShortName}.${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}} and <#else>${tableShortName}.${uniqueIndexVo.dataColumnName} =  <#noparse>#{</#noparse>${uniqueIndexVo.dataColumnNameFormat}}</#if></#list>
     </select>
