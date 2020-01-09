@@ -17,6 +17,8 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 
     @Autowired
     private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
+    @Autowired
+    private ${tableNameFormat}HandleDao ${tableNameFormatOnCase}HandleDao;
 
 	@Override
 	public Result insert(${tableNameFormat}DTO record) {
@@ -65,17 +67,15 @@ public class ${tableNameFormat}ServiceImpl extends GenericService implements ${t
 	}
 
     @Override
-    public QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query) {
-        QueryResult<${tableNameFormat}DTO> result = new QueryResult<${tableNameFormat}DTO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
-        List<${tableNameFormat}DTO> list = null;
+    public QueryResult<${tableNameFormat}VO> queryList(${tableNameFormat}Query query) {
+        QueryResult<${tableNameFormat}VO> result = new QueryResult<${tableNameFormat}VO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
+        List<${tableNameFormat}VO> list = null;
         try {
             if (query.getFlag()) {
                 PageHelper.startPage(query.getPageNum(), query.getPageSize());
             }
-            ${tableNameFormat}Example example = new ${tableNameFormat}Example();
-            ${tableNameFormat}Example.Criteria criteria = example.createCriteria();
 
-            list = ${tableNameFormatOnCase}Dao.selectByExample(example);
+            list = ${tableNameFormatOnCase}HandleDao.queryList(example);
             result.setSuccess(true);
             result.setResults(list);
             result.setErrorCode(ResponseEnum.CODE_0000.getCode());

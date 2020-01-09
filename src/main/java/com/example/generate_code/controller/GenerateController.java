@@ -25,7 +25,7 @@ import freemarker.template.Template;
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
 //    private static final String PARENT_URL = "card";   //todo
-    private static final String TABLE_NAME = "bz_dining_type"; //todo
+    private static final String TABLE_NAME = "bz_device"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo

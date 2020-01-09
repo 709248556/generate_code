@@ -34,7 +34,7 @@ public class ${tableNameFormat}Controller extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String indexView(Model model, HttpServletRequest request, ${tableNameFormat}Query query) {
         try {
-            QueryResult<${tableNameFormat}DTO> result = ${tableNameFormatOnCase}Service.queryList(query);
+            QueryResult<${tableNameFormat}VO> result = ${tableNameFormatOnCase}Service.queryList(query);
             <#list searchVos as searchVo >
             <#if searchVo.type == "select">
             model.addAttribute("${searchVo.items}", ${searchVo.items}.values());
@@ -70,7 +70,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     @ResponseBody
     public String subSubmit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO,HttpServletRequest request) {
         ReturnJsonVO json = new ReturnJsonVO();
+        ShiroAccountVO vo = getCurrentUser();
         try {
+            ${tableNameFormatOnCase}DTO.setCreateUser(vo.getOperName());
+            ${tableNameFormatOnCase}DTO.setCreateTime(new Date());
             Result result = ${tableNameFormatOnCase}Service.insert(${tableNameFormatOnCase}DTO);
 
             if (result.isSuccess()){
@@ -112,8 +115,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     @ResponseBody
     public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
+        ShiroAccountVO vo = getCurrentUser();
         try {
-
+            ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
+            ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
             Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
             if (result.isSuccess()) {
@@ -141,8 +146,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     @ResponseBody
     public String freeze(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
+        ShiroAccountVO vo = getCurrentUser();
         try {
-
+            ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
+            ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
             Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
             if (result.isSuccess()) {
@@ -170,7 +177,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     @ResponseBody
     public String thaw(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
+        ShiroAccountVO vo = getCurrentUser();
         try {
+            ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
+            ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
             Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
             if (result.isSuccess()) {
