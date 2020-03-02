@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,11 +38,7 @@ public class ${tableNameFormat}Controller extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String indexView(Model model, HttpServletRequest request, ${tableNameFormat}Query query) {
         try {
-            QueryResult<${tableNameFormat}VO> result = ${tableNameFormatOnCase}Service.queryList(query);
-            <#list searchVos as searchVo >
-            <#if searchVo.type == "select">
-            model.addAttribute("${searchVo.items}", ${searchVo.items}.values());
-            </#if></#list>
+            List<${tableNameFormat}VO> ${tableNameFormat}List = JSON.parseArray(${tableNameFormatOnCase}Service.queryList(query)).toJavaList(${tableNameFormat}VO.class);
             model.addAttribute("source", result);
             model.addAttribute("query", query);
             model.addAttribute("menuRight", menuRight(PARENT_URL));
@@ -71,11 +71,12 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String subSubmit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO,HttpServletRequest request) {
         ReturnJsonVO json = new ReturnJsonVO();
         ShiroAccountVO vo = getCurrentUser();
+        Result result = new Result();
         try {
             ${tableNameFormatOnCase}DTO.setCreateUser(vo.getOperName());
             ${tableNameFormatOnCase}DTO.setCreateTime(new Date());
-            Result result = ${tableNameFormatOnCase}Service.insert(${tableNameFormatOnCase}DTO);
-
+            MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.insert(${tableNameFormatOnCase}DTO), MsgRoot.class);
+            result = (Result) msgRoot.getBody();
             if (result.isSuccess()){
                 json.setMessage(ViewMsgConstant.ADD_SUCCEED);
             } else {
@@ -100,9 +101,9 @@ public class ${tableNameFormat}Controller extends BaseController {
     * @return
     */
     @RequestMapping(value = "/editView")
-    public String editView(HttpServletRequest request,${tableNameFormat}Query query, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(query);
-        model.addAttribute("${tableNameFormatOnCase}", singleResult.getResult());
+    public String editView(HttpServletRequest request,Integer ${tableNameFormatOnCase}Id, Model model) {
+        MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.querySingle(${tableNameFormatOnCase}Id), MsgRoot.class);
+        model.addAttribute("${tableNameFormatOnCase}", (Result) msgRoot.getBody());
         return PARENT_URL + "/edit";
     }
 
@@ -116,11 +117,13 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String edit(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         ShiroAccountVO vo = getCurrentUser();
+        Result result = new Result();
         try {
             ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
             ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
-            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO), MsgRoot.class);
+            result = (Result) msgRoot.getBody();
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.EDIT_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -147,11 +150,13 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String freeze(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         ShiroAccountVO vo = getCurrentUser();
+        Result result = new Result();
         try {
             ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
             ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
-            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO), MsgRoot.class);
+            result = (Result) msgRoot.getBody();
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.CHANGE_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -178,11 +183,13 @@ public class ${tableNameFormat}Controller extends BaseController {
     public String thaw(${tableNameFormat}DTO ${tableNameFormatOnCase}DTO) {
         ReturnJsonVO json = new ReturnJsonVO();
         ShiroAccountVO vo = getCurrentUser();
+        Result result = new Result();
         try {
             ${tableNameFormatOnCase}DTO.setModifyUser(vo.getOperName());
             ${tableNameFormatOnCase}DTO.setModifyTime(new Date());
 
-            Result result = ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO);
+            MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}DTO), MsgRoot.class);
+            result = (Result) msgRoot.getBody();
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.CHANGE_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -210,8 +217,10 @@ public class ${tableNameFormat}Controller extends BaseController {
     @PostMapping(value = "/delete${tableNameFormat}")
     public String delete(HttpServletRequest request, Long id, Model model) {
         ReturnJsonVO json = new ReturnJsonVO();
+        Result result = new Result();
         try {
-            Result result = ${tableNameFormatOnCase}Service.delete(id);
+            MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.delete(id), MsgRoot.class);
+            result = (Result) msgRoot.getBody();
             if (result.isSuccess()) {
                 json.setMessage(ViewMsgConstant.DELETE_SUCCEED);
                 json.setStatus(ViewMsgConstant.SUCCEED_CODE);
@@ -237,8 +246,8 @@ public class ${tableNameFormat}Controller extends BaseController {
     */
     @RequestMapping(value = "/detailView")
     public String detailView(HttpServletRequest request, ${tableNameFormat}Query query, Model model) {
-        SingleResult<${tableNameFormat}DTO> singleResult = ${tableNameFormatOnCase}Service.querySingle(query);
-        model.addAttribute("${tableNameFormatOnCase}",singleResult.getResult() );
+        MsgRoot msgRoot = JSONObject.parseObject(${tableNameFormatOnCase}Service.querySingle(query), MsgRoot.class);
+        model.addAttribute("${tableNameFormatOnCase}", (Result) msgRoot.getBody());
         return PARENT_URL + "/detail";
     }
 }

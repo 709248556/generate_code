@@ -23,9 +23,10 @@ import freemarker.template.Template;
   public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
-    private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
+    private static final String TARGET_PATH_ADMIN = "src/main/java/com/example/generate_code/target/admin";
+    private static final String TARGET_PATH_WEBBUSINESS = "src/main/java/com/example/generate_code/target/webbusiness";
 //    private static final String PARENT_URL = "card";   //todo
-    private static final String TABLE_NAME = "bz_operator_mcht"; //todo
+    private static final String TABLE_NAME = "bz_unit"; //todo
     private static final  int TABLE_PREFIX_LENGTH = 3;
     private static final String[] SEARCH_NAME = new String[]{};  //todo 搜索框
     private static final String[] SEARCH_PLACEHOLDER = new String[]{};  //todo
@@ -47,13 +48,14 @@ import freemarker.template.Template;
         Writer queryOut = null;
         Writer DAOOut = null;
         Writer serviceOut = null;
-        Writer serviceImplOut = null;
-        Writer controllerlOut = null;
+        Writer Controller_adminOut = null;
+        Writer Controller_webbusinessOut = null;
+        Writer ComponentOut = null;
+        Writer FallbackOut = null;
         Writer jspOut = null;
         Writer addOut = null;
         Writer editOut = null;
         Writer detailOut = null;
-        Writer ComponentOut = null;
         try {
 
             // step2 获取模版路径
@@ -66,8 +68,9 @@ import freemarker.template.Template;
             Template queryTemplate = configuration.getTemplate("Query.ftl");
             Template DAOTemplate = configuration.getTemplate("DAO.ftl");
             Template serviceTemplate = configuration.getTemplate("Service.ftl");
-            Template serviceImplTemplate = configuration.getTemplate("ServiceImpl.ftl");
-            Template controllerlTemplate = configuration.getTemplate("Controller.ftl");
+            Template controller_adminTemplate = configuration.getTemplate("Controller_admin.ftl");
+            Template controller_webbusinessTemplate = configuration.getTemplate("Controller_webbusiness.ftl");
+            Template FallbackTemplate = configuration.getTemplate("Fallback.ftl");
             Template jspTemplate = configuration.getTemplate("jsp.ftl");
             Template addTemplate = configuration.getTemplate("add.ftl");
             Template editTemplate = configuration.getTemplate("edit.ftl");
@@ -94,26 +97,28 @@ import freemarker.template.Template;
             getJspDateMap(dataMap);
 
             // step5 生成数据
-            File xmlFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Handle-Mapper.xml");//TODO
-            File DTOFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"VO.java");
-            File queryFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Query.java");
-            File DAOFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"HandleDao.java");
-            File serviceFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
-            File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
-            File ControllerlFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
-            File jspFile = new File(TARGET_PATH + "\\" + "index.jsp");
-            File addFile = new File(TARGET_PATH + "\\" + "add.jsp");
-            File editFile = new File(TARGET_PATH + "\\" + "edit.jsp");
-            File detailFile = new File(TARGET_PATH + "\\" + "detail.jsp");
-            File ComponentFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Component.java");
+            File xmlFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Handle-Mapper.xml");//TODO
+            File DTOFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"VO.java");
+            File queryFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Query.java");
+            File DAOFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"HandleDao.java");
+            File serviceFile = new File(TARGET_PATH_ADMIN + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
+            File controller_adminFile = new File(TARGET_PATH_ADMIN + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
+            File Controller_webbusinessFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
+            File FallbackFile = new File(TARGET_PATH_ADMIN + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceFallback.java");
+            File jspFile = new File(TARGET_PATH_ADMIN + "\\" + "index.jsp");
+            File addFile = new File(TARGET_PATH_ADMIN + "\\" + "add.jsp");
+            File editFile = new File(TARGET_PATH_ADMIN + "\\" + "edit.jsp");
+            File detailFile = new File(TARGET_PATH_ADMIN + "\\" + "detail.jsp");
+            File ComponentFile = new File(TARGET_PATH_WEBBUSINESS + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Component.java");
 
             xmlOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(xmlFile)));
             DTOOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DTOFile)));
             queryOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(queryFile)));
             DAOOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(DAOFile)));
             serviceOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceFile)));
-            serviceImplOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplFile)));
-            controllerlOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ControllerlFile)));
+            Controller_webbusinessOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Controller_webbusinessFile)));
+            Controller_adminOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(controller_adminFile)));
+            FallbackOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FallbackFile)));
             jspOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jspFile)));
             addOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(addFile)));
             editOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(editFile)));
@@ -131,10 +136,12 @@ import freemarker.template.Template;
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^DAO文件创建成功 !");
             serviceTemplate.process(dataMap, serviceOut);
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^service文件创建成功 !");
-            serviceImplTemplate.process(dataMap, serviceImplOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^serviceImpl文件创建成功 !");
-            controllerlTemplate.process(dataMap, controllerlOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^controller文件创建成功 !");
+            controller_adminTemplate.process(dataMap, Controller_adminOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^controller_admin文件创建成功 !");
+            controller_webbusinessTemplate.process(dataMap, Controller_webbusinessOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^controller_webbusiness文件创建成功 !");
+            FallbackTemplate.process(dataMap, FallbackOut);
+            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Fallback文件创建成功 !");
             jspTemplate.process(dataMap, jspOut);
             System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^jsp文件创建成功 !");
             addTemplate.process(dataMap, addOut);
@@ -164,11 +171,14 @@ import freemarker.template.Template;
                 if (null != serviceOut) {
                     serviceOut.flush();
                 }
-                if (null != serviceImplOut) {
-                    serviceImplOut.flush();
+                if (null != Controller_adminOut) {
+                    Controller_adminOut.flush();
                 }
-                if (null != controllerlOut) {
-                    controllerlOut.flush();
+                if (null != Controller_webbusinessOut) {
+                    Controller_webbusinessOut.flush();
+                }
+                if (null != FallbackOut) {
+                    FallbackOut.flush();
                 }
                 if (null != jspOut) {
                     jspOut.flush();
