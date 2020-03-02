@@ -24,7 +24,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 	@Autowired
 	private ${tableNameFormat}Component ${tableNameFormatOnCase}Component;
 
-    @GetMapping(value = "/web${URL}/insert${tableNameFormatOnCase}")
+    @GetMapping(value = "${URL}/insert${tableNameFormatOnCase}")
 	@SentinelResource(value = "insert", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "插入信息", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormat}DTO", value = "对象", paramType = "from", required = true, dataType = "${tableNameFormat}DTO") })
@@ -37,7 +37,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 		return JSONObject.toJSONString(msgRoot);
     }
 
-    @GetMapping(value = "/web${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
+    @GetMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
 	@SentinelResource(value = "delete", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "删除信息", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormatOnCase}Id", value = "编号", paramType = "from", required = true, dataType = "Integer") })
@@ -50,7 +50,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 		return JSONObject.toJSONString(msgRoot);
     }
 
-    @PostMapping(value = "/web${URL}/update${tableNameFormat}DTO")
+    @PostMapping(value = "${URL}/update${tableNameFormat}DTO")
 	@SentinelResource(value = "update", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "修改信息", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormat}DTO", value = "对象", paramType = "from", required = true, dataType = "${tableNameFormat}DTO") })
@@ -65,7 +65,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 
 
 
-    @PostMapping(value = "/web${URL}/queryList")
+    @PostMapping(value = "${URL}/queryList")
 	@SentinelResource(value = "queryList", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "获取信息列表", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormat}Query", value = "查询对象", paramType = "from", required = true, dataType = "${tableNameFormat}Query")})
@@ -78,7 +78,7 @@ public class ${tableNameFormat}Controller extends BasicController {
         return JSONObject.toJSONString(msgRoot);
     }
 
-    @GetMapping(value = "/web${URL}/querySingle/{${tableNameFormatOnCase}Id}")
+    @GetMapping(value = "${URL}/querySingle/{${tableNameFormatOnCase}Id}")
     @SentinelResource(value = "querySingle", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
     @ApiOperation(value = "获取信息", response = MsgRoot.class)
     @ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormatOnCase}Id", value = "编号", paramType = "path", required = true, dataType = "Integer")})
