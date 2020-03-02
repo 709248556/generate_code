@@ -1,6 +1,12 @@
 
 
 import java.util.List;
+import org.springframework.cloud.openfeign.FeignClient;
+import com.zfull.commons.basic.constant.ServiceNameConst;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @ClassName: ${tableNameFormat}Service.java
@@ -8,31 +14,37 @@ import java.util.List;
  * @author yanlianglong
  * @date ${.now?date}
  */
+@FeignClient(value = ServiceNameConst.SPP_WEBBUSINESS, fallbackFactory=${tableNameFormat}ServiceFallback.class)
 public interface ${tableNameFormat}Service {
 
     /**
      * 新增
      */
-     Result insert(${tableNameFormat}DTO record);
+    @PostMapping(value = "${URL}/insert${tableNameFormatOnCase}")
+    String insert(@RequestBody ${tableNameFormat}DTO record);
 
     /**
      * 删除
      */
-    Result delete(Long id);
+    @GetMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
+    String delete(@PathVariable("${tableNameFormatOnCase}Id") Integer ${tableNameFormatOnCase}Id);
 
     /**
      * 编辑
      */
-    Result update(${tableNameFormat}DTO record);
+    @PostMapping(value = "${URL}/update${tableNameFormat}DTO")
+    String update(@RequestBody ${tableNameFormat}DTO record);
 
     /**
      * 查询
      */
-    QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query);
+    @PostMapping(value = "${URL}/queryList")
+    String queryList(@RequestBody ${tableNameFormat}Query query);
 
     /**
     * 单个查询
     */
-    SingleResult<${tableNameFormat}VO> querySingle(${tableNameFormat}Query query);
+    @GetMapping(value = "${URL}/querySingle/{${tableNameFormatOnCase}Id}")
+    String querySingle(@PathVariable Integer ${tableNameFormatOnCase}Id);
 }
 
