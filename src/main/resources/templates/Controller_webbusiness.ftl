@@ -2,11 +2,7 @@
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSONObject;
@@ -37,7 +33,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 		return JSONObject.toJSONString(msgRoot);
     }
 
-    @GetMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
+    @DeleteMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
 	@SentinelResource(value = "delete", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "删除信息", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormatOnCase}Id", value = "编号", paramType = "from", required = true, dataType = "Integer") })
@@ -50,7 +46,7 @@ public class ${tableNameFormat}Controller extends BasicController {
 		return JSONObject.toJSONString(msgRoot);
     }
 
-    @PostMapping(value = "${URL}/update${tableNameFormat}DTO")
+    @PutMapping(value = "${URL}/update${tableNameFormat}DTO")
 	@SentinelResource(value = "update", fallback = "handleFallback", fallbackClass = SentinelException.class, blockHandler = "handleBlock", blockHandlerClass = SentinelException.class)
 	@ApiOperation(value = "修改信息", response = MsgRoot.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "${tableNameFormat}DTO", value = "对象", paramType = "from", required = true, dataType = "${tableNameFormat}DTO") })

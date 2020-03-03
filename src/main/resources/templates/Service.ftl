@@ -3,10 +3,7 @@
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import com.zfull.commons.basic.constant.ServiceNameConst;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName: ${tableNameFormat}Service.java
@@ -26,13 +23,13 @@ public interface ${tableNameFormat}Service {
     /**
      * 删除
      */
-    @GetMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
+    @DeleteMapping(value = "${URL}/delete${tableNameFormat}DTO/{${tableNameFormatOnCase}Id}")
     String delete(@PathVariable("${tableNameFormatOnCase}Id") Integer ${tableNameFormatOnCase}Id);
 
     /**
      * 编辑
      */
-    @PostMapping(value = "${URL}/update${tableNameFormat}DTO")
+    @PutMapping(value = "${URL}/update${tableNameFormat}DTO")
     String update(@RequestBody ${tableNameFormat}DTO record);
 
     /**
