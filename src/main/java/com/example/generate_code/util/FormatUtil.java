@@ -65,7 +65,7 @@ public class FormatUtil {
             }else if (item.equalsIgnoreCase("TEXT")) {
                 format.add("String");
             }else if (item.equalsIgnoreCase("decimal")) {
-                format.add("BigDecimal");
+                format.add("double");
             }else if (item.equalsIgnoreCase("LONGTEXT")) {
                 format.add("String");
             }else {
