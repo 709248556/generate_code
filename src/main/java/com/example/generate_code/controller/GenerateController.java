@@ -54,8 +54,8 @@ public class GenerateController {
             dataMap.put("tableNameFormat",FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("tableNameFormatOnCase",FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("baseColumnList",DatabaseUtil.getColumnNames(TABLE_NAME));
-            dataMap.put("serialVersionUID1",(Math.random() * 9 + 1) * 1000000000000000l);
-            dataMap.put("serialVersionUID2",(Math.random() * 9 + 1) * 1000000000000000l);
+            dataMap.put("serialVersionUID1",(String.valueOf(Math.abs(UUID.randomUUID().getMostSignificantBits())));
+            dataMap.put("serialVersionUID2",String.valueOf(Math.abs(UUID.randomUUID().getMostSignificantBits())));
             dataMap.put("tableName",TABLE_NAME);
             dataMap.put("tableShortName",FormatUtil.getShortName(TABLE_NAME).equals("as")  ? "as1" : FormatUtil.getShortName(TABLE_NAME) );
             dataMap.put("URL",FormatUtil._splitOnCase(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));

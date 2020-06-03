@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "${tableName}")
 public class ${tableNameFormat} extends AbstractDefaultEntity implements SoftDelete{
 
-	private static final long serialVersionUID = ${serialVersionUID1?c}L ;
+	private static final long serialVersionUID = ${serialVersionUID1}L ;
 <#list baseResultMapVoList as baseResultMapVo >
 	<#if baseResultMapVo.property =="id">
 	@GeneratedValue(strategy = GenerationType.TABLE)

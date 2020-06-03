@@ -16,7 +16,6 @@ public class DatabaseUtil {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     //todo
-//    private static final String URL = "jdbc:mysql://10.252.2.40:3306/zfdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull";
     private static final String URL = "jdbc:mysql://10.252.2.41:3306/zfdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false";
     private static final String USERNAME = "zfuser";
     private static final String PASSWORD = "zfuser!Q2w3e4r";
