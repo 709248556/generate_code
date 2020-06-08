@@ -16,9 +16,9 @@ public class DatabaseUtil {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     //todo
-    private static final String URL = "jdbc:mysql://10.252.2.41:3306/zfdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false";
-    private static final String USERNAME = "zfuser";
-    private static final String PASSWORD = "zfuser!Q2w3e4r";
+    private static final String URL = "jdbc:mysql://192.168.0.50:3306/zjsm-sp?characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=GMT%2b8&&useInformationSchema=true";
+    private static final String USERNAME = "test";
+    private static final String PASSWORD = "123456";
 
     private static final String SQL = "SELECT * FROM ";// 数据库操作
 
@@ -86,6 +86,34 @@ public class DatabaseUtil {
             }
         }
         return tableNames;
+    }
+
+    /**
+     * 获取表的注释
+     */
+    public static String getTableRemark(String tableName) {
+        Connection conn = getConnection();
+        String remark = "";
+        ResultSet rs = null;
+        try {
+            //获取数据库的元数据
+            DatabaseMetaData db = conn.getMetaData();
+            //从元数据中获取到所有的表名
+            rs = db.getTables(null, null, tableName, new String[]{"TABLE"});
+            while (rs.next()) {
+                remark = rs.getString("REMARKS");
+            }
+        } catch (SQLException e) {
+            LOGGER.error("getTableRemark failure", e);
+        } finally {
+            try {
+                rs.close();
+                closeConnection(conn);
+            } catch (SQLException e) {
+                LOGGER.error("close ResultSet failure", e);
+            }
+        }
+        return remark;
     }
 
     /**
@@ -233,10 +261,11 @@ public class DatabaseUtil {
     }
 
     public static void main(String[] args) {
-        List<String> tableNames = getTableNames();
-        System.out.println("tableNames:" + tableNames);
+//        List<String> tableNames = getTableNames();
+//        System.out.println("tableNames:" + tableNames);
 //        for (String tableName : tableNames) {
 //            System.out.println("tableName:" + tableName);
+//            System.out.println("remark:" + getTableRemark(tableName));
 //            System.out.println("ColumnNames:" + getColumnNames(tableName));
 //            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
 //            System.out.println("ColumnComments:" + getColumnComments(tableName));
@@ -268,7 +297,7 @@ public class DatabaseUtil {
         List<String> columnNamesUpperCase = FormatUtil.columnNamesUpperCase(getColumnNames(tableName));//DTO格式字段名
         List<String> columnDTOTypes = FormatUtil.columnTypes(getColumnTypes(tableName));//DTO格式类型名
         List<String> columnTypes = FormatUtil.columnTypesData(getColumnTypes(tableName));//数据库格式类型名
-        List<String> ColumnComments = getColumnComments(tableName);//数据库格式类型名
+        List<String> ColumnComments = getColumnComments(tableName);//注释
         for (int i = 0; i < columnNames.size(); i++) {
             BaseResultMapVo baseResultMapVo = new BaseResultMapVo();
             baseResultMapVo.setColumn(originalColumnNames.get(i));

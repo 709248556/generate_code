@@ -1,93 +1,83 @@
-
-
-import java.util.List;
+import com.autumn.mybatis.mapper.PageResult;
+import com.autumn.mybatis.wrapper.EntityQueryWrapper;
+import com.autumn.util.AutoMapUtils;
+import com.autumn.util.StringUtils;
+import com.autumn.util.data.PageQueryBuilder;
+import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.github.pagehelper.PageHelper;
-import com.zfull.commons.enums.ResponseEnum;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
- * @ClassName: ${tableNameFormat}ServiceImpl.java
  * @Description:
  * @author yanlianglong
  * @date ${.now?date}
  */
-@Service("${tableNameFormatOnCase}Service")
-public class ${tableNameFormat}ServiceImpl extends GenericService implements ${tableNameFormat}Service{
-
-    @Autowired
-    private ${tableNameFormat}Dao ${tableNameFormatOnCase}Dao;
-
-	@Override
-	public Result insert(${tableNameFormat}DTO record) {
-		Result result = new Result();
-        try {
-            ${tableNameFormatOnCase}Dao.insert(record);
-    		result.setSuccess(true);
-        } catch (Exception e) {
-            result.setSuccess(false);
-            logger.error(e.getMessage());
-        }
-        return result;
-	}
+@Service
+public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationService<
+        ${tableNameFormat},
+        ${tableNameFormat}Repository,
+        ${tableNameFormat}, ${tableNameFormat}Repository,
+        ${tableNameFormat}Input, ${tableNameFormat}Input,
+        ${tableNameFormat}Output, ${tableNameFormat}Output>
+        implements ${tableNameFormat}Service {
 
     @Override
-	public Result deleteById(Long id) {
-		Result result = new Result();
-        try {
-            ${tableNameFormatOnCase}Dao.deleteById(id);
-            result.setSuccess(true);
-        } catch (Exception e) {
-            result.setSuccess(false);
-            logger.error(e.getMessage());
-        }
-        return result;
-	}
-
-
-	@Override
-	public Result update(${tableNameFormat}DTO record) {
-		Result result = new Result();
-        try {
-            ${tableNameFormatOnCase}Dao.update(record);
-            result.setSuccess(true);
-        } catch (Exception e) {
-            result.setSuccess(false);
-            logger.error(e.getMessage());
-        }
-        return result;
-	}
-
-    @Override
-    public QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query) {
-        QueryResult<${tableNameFormat}DTO> result = new QueryResult<${tableNameFormat}DTO>(false, ResponseEnum.CODE_9999.getCode(), "查询失败", null);
-        List<${tableNameFormat}DTO> list = null;
-        try {
-            if (query.getFlag()) {
-                PageHelper.startPage(query.getPageNum(), query.getPageSize());
-            }
-            list = ${tableNameFormatOnCase}Dao.queryList(query);
-            result.setSuccess(true);
-            result.setResults(list);
-            result.setErrorCode(ResponseEnum.CODE_0000.getCode());
-        } catch (Exception e) {
-            logger.info("${tableNameFormat}ServiceImpl.queryList error: {}", e);
-        }
-        return result;
+    public String getModuleName() {
+        return "${tableRemark}管理";
     }
 
     @Override
-    public SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query) {
-        SingleResult<${tableNameFormat}DTO> result = new SingleResult<>();
-        try {
-            ${tableNameFormat}DTO ${tableNameFormatOnCase}DTO = ${tableNameFormatOnCase}Dao.querySingle(query);
-            result.setSuccess(true);
-            result.setResult(${tableNameFormatOnCase}DTO);
-            result.setErrorCode(ResponseEnum.CODE_0000.getCode());
-        } catch (Exception e) {
-            logger.info("${tableNameFormat}ServiceImpl.getSingleById error: {}", e);
+    protected void queryByOrder(EntityQueryWrapper<${tableNameFormat}> query) {
+        query.lambda().orderByDescending(${tableNameFormat}::getCreatedAt);
+    }
+
+    /**
+     * 添加之前的处理
+     *
+     * @param input
+     * @param query
+     * @return
+     */
+    @Override
+    protected ${tableNameFormat} addBefore(${tableNameFormat}Input input, EntityQueryWrapper<${tableNameFormat}> query) {
+        ${tableNameFormat} ${tableNameFormatOnCase} = super.addBefore(input, query);
+
+        return ${tableNameFormatOnCase};
+    }
+
+    /**
+    * @Description: 删除
+    * @Author: yanlianglong
+    * @Date: ${.now?date}
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ${tableNameFormat}Output delete(BaseIdDto input) {
+        ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
+        ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
+        this.getRepository().update(${tableNameFormatOnCase});
+        return AutoMapUtils.map(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
+    }
+
+    /***
+    * @Description: 分页查询列表
+    * @Author: yanlianglong
+    * @Date: @Date: ${.now?date}
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public PageResult<${tableNameFormat}Output> queryListForCusPage(${tableNameFormat}SelectDto input) {
+        PageQueryBuilder<${tableNameFormat}> query = new PageQueryBuilder<>(this.getQueryEntityClass());
+        this.generateQueryListColumn(query.getQuery());
+        this.systemByCriteria(query.getQuery());
+        this.queryByOrder(query.getQuery());
+        query.page(input.getCurrentPage(), input.getPageSize());
+        //名称
+        if (StringUtils.isNotNullOrBlank(input.getName())) {
+            query.getQuery().lambda().where().like(${tableNameFormat}::getName, input.getName().trim());
         }
-        return result;
+        return query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
     }
 }
 

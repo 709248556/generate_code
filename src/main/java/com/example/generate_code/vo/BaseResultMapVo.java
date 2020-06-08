@@ -1,12 +1,12 @@
 package com.example.generate_code.vo;
 
 public class BaseResultMapVo {
-    private String column;
-    private String jdbcType;
-    private String DTOType;
-    private String property;
-    private String columnComment;
-    private String columnNameUpperCase;
+    private String column;//aread_id
+    private String jdbcType;//int
+    private String DTOType;//integer
+    private String property;//areadId
+    private String columnComment;//注释
+    private String columnNameUpperCase;//AreadId
 
     public String getColumnNameUpperCase() {
         return columnNameUpperCase;

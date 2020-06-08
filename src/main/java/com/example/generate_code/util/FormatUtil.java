@@ -34,7 +34,7 @@ public class FormatUtil {
         List<String> format = new ArrayList<>();
         String str = "";
         original.forEach(item -> {
-            format.add(_split(item.substring(1)));
+            format.add(_split(item));
         });
         return format;
     }
@@ -43,7 +43,7 @@ public class FormatUtil {
         List<String> format = new ArrayList<>();
         String str = "";
         original.forEach(item -> {
-            format.add(_splitAll(item.substring(1)));
+            format.add(_splitAll(item));
         });
         return format;
     }
@@ -57,6 +57,8 @@ public class FormatUtil {
             } else if (item.equalsIgnoreCase("CHAR")) {
                 format.add("String");
             } else if (item.equalsIgnoreCase("BIGINT")) {
+                format.add("Long");
+            } else if (item.equalsIgnoreCase("BIGINT UNSIGNED")) {
                 format.add("Long");
             } else if (item.equalsIgnoreCase("DATETIME")) {
                 format.add("Date");
@@ -84,7 +86,9 @@ public class FormatUtil {
             } else if (item.equalsIgnoreCase("CHAR")) {
                 format.add("CHAR");
             } else if (item.equalsIgnoreCase("BIGINT")) {
-                format.add("BIGINT");
+                format.add("Long");
+            } else if (item.equalsIgnoreCase("BIGINT UNSIGNED")) {
+                format.add("Long");
             } else if (item.equalsIgnoreCase("DATETIME")) {
                 format.add("DATE");
             } else if (item.equalsIgnoreCase("INT")) {

@@ -1,38 +1,28 @@
-
-
-import java.util.List;
+import com.autumn.application.service.EditApplicationService;
+import com.autumn.mybatis.mapper.PageResult;
 
 /**
- * @ClassName: ${tableNameFormat}Service.java
  * @Description:
  * @author yanlianglong
  * @date ${.now?date}
  */
-public interface ${tableNameFormat}Service {
+public interface ${tableNameFormat}Service extends
+        EditApplicationService<Long, ${tableNameFormat}Input, ${tableNameFormat}Input, ${tableNameFormat}Output, ${tableNameFormat}Output>{
 
     /**
-     * 新增
+     * 删除
+     *
+     * @param input
+     * @return
      */
-     Result insert(${tableNameFormat}DTO record);
+    ${tableNameFormat}Output delete(BaseIdDto input);
 
     /**
-     * 根据Id删除
+     * 分页查找列表
+     *
+     * @param input
+     * @return
      */
-    Result deleteById(Long id);
-
-    /**
-     * 编辑
-     */
-    Result update(${tableNameFormat}DTO record);
-
-    /**
-     * 查询
-     */
-    QueryResult<${tableNameFormat}DTO> queryList(${tableNameFormat}Query query);
-
-    /**
-    * 单个查询
-    */
-    SingleResult<${tableNameFormat}DTO> querySingle(${tableNameFormat}Query query);
+    PageResult<${tableNameFormat}Output> queryListForCusPage(${tableNameFormat}SelectDto input);
 }
 

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "${tableName}")
-public class ${tableNameFormat} extends AbstractDefaultEntity implements SoftDelete{
+public class ${tableNameFormat} extends AbstractDefaultEntity implements SpEntity,SoftDelete{
 
 	private static final long serialVersionUID = ${serialVersionUID1}L ;
 <#list baseResultMapVoList as baseResultMapVo >
@@ -26,15 +26,22 @@ public class ${tableNameFormat} extends AbstractDefaultEntity implements SoftDel
 	public Long getId() {
 		return super.getId();
 	}
+
 	/**
 	* id
 	*/
     private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
+
 	<#else>
 	/**
-	* <#if baseResultMapVo.property?exists>${baseResultMapVo.columnComment}<#else>${baseResultMapVo.column}</#if>
+	* ${baseResultMapVo.columnComment}
 	*/
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
+
 	</#if>
 </#list>
+	/**
+     * 是否删除
+     */
+    private boolean delete;
 }
