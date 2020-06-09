@@ -73,10 +73,25 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         this.systemByCriteria(query.getQuery());
         this.queryByOrder(query.getQuery());
         query.page(input.getCurrentPage(), input.getPageSize());
-        //名称
-        if (StringUtils.isNotNullOrBlank(input.getName())) {
-            query.getQuery().lambda().where().like(${tableNameFormat}::getName, input.getName().trim());
+<#list selectDTOs as selectDTO >
+    <#list baseResultMapVoList as baseResultMapVo >
+        <#if selectDTO == baseResultMapVo.column>
+        <#if "String" == baseResultMapVo.DTOType>
+        if (StringUtils.isNotNullOrBlank(input.get${baseResultMapVo.property}())) {
+            query.getQuery().lambda().where().like(${tableNameFormat}::get${baseResultMapVo.property}, input.get${baseResultMapVo.property}().trim());
         }
+        </#if>
+        <#if "Long" == baseResultMapVo.DTOType||"Integer" == baseResultMapVo.DTOType>
+        if (input.get${baseResultMapVo.property}()!= null) {
+            if (!input.isLegal(input.get${baseResultMapVo.property}())) {
+                return emptyPageResult();
+            }
+            query.getQuery().lambda().where().eq(${tableNameFormat}::get${baseResultMapVo.property}, input.get${baseResultMapVo.property}());
+        }
+        </#if>
+        </#if>
+    </#list>
+</#list>
         return query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
     }
 }
