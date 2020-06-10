@@ -15,7 +15,7 @@ public interface ${tableNameFormat}Service extends
      * @param input
      * @return
      */
-    ${tableNameFormat}Output delete(BaseIdDto input);
+    ${tableNameFormat}Output deleteById(BaseIdDto input);
 
     /**
      * 分页查找列表

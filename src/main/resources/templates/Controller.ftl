@@ -33,10 +33,11 @@ public class ${tableNameFormat}Controller {
     public ${tableNameFormat}Output update(@Valid @RequestBody  ${tableNameFormat}Input ${tableNameFormatOnCase}Input){
         return ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}Input);
     }
+
     @ApiOperation(value = "删除${tableRemark}信息")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @PostMapping("/deleteById")
-    public ${tableNameFormat}Output update(@Valid @RequestBody BaseIdDto input){
+    public ${tableNameFormat}Output deleteById(@Valid @RequestBody BaseIdDto input){
         return ${tableNameFormatOnCase}Service.delete(input);
     }
 

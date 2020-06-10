@@ -15,6 +15,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.Date;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -25,7 +26,7 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_article";
+    private static final String TABLE_NAME = "sp_volunteer_unit";
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<String> SELECTDTOS =  Arrays.asList("content_type","status","news_category_id","title");
     private static final  int TABLE_PREFIX_LENGTH = 3;

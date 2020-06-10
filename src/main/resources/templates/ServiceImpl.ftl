@@ -48,12 +48,11 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
 
     /**
     * @Description: 删除
-    * @Author: yanlianglong
-    * @Date: ${.now?date}
+    * @param input
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ${tableNameFormat}Output delete(BaseIdDto input) {
+    public ${tableNameFormat}Output deleteById(BaseIdDto input) {
         ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
         ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
         this.getRepository().update(${tableNameFormatOnCase});
@@ -62,8 +61,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
 
     /***
     * @Description: 分页查询列表
-    * @Author: yanlianglong
-    * @Date: @Date: ${.now?date}
+    * @param input
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
