@@ -23,6 +23,6 @@ public interface ${tableNameFormat}Service extends
      * @param input
      * @return
      */
-    PageResult<${tableNameFormat}Output> queryListForCusPage(${tableNameFormat}SelectDto input);
+    PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input);
 }
 

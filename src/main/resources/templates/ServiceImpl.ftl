@@ -6,7 +6,7 @@ import com.autumn.util.data.PageQueryBuilder;
 import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.autumn.audited.OperationAuditedLog;
 
 /**
  * @Description:
@@ -21,6 +21,9 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         ${tableNameFormat}Input, ${tableNameFormat}Input,
         ${tableNameFormat}Output, ${tableNameFormat}Output>
         implements ${tableNameFormat}Service {
+
+    @Autowired
+    private OperationAuditedLog operationAuditedLog;
 
     @Override
     public String getModuleName() {
@@ -56,6 +59,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
         ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
         this.getRepository().update(${tableNameFormatOnCase});
+        operationAuditedLog.addLog(this.getModuleName(),"删除",${tableNameFormatOnCase});
         return AutoMapUtils.map(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
     }
 
@@ -65,7 +69,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public PageResult<${tableNameFormat}Output> queryListForCusPage(${tableNameFormat}SelectDto input) {
+    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
         PageQueryBuilder<${tableNameFormat}> query = new PageQueryBuilder<>(this.getQueryEntityClass());
         this.generateQueryListColumn(query.getQuery());
         this.systemByCriteria(query.getQuery());

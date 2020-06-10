@@ -51,7 +51,7 @@ public class ${tableNameFormat}Controller {
     @ApiOperation(value = "获取${tableRemark}信息列表")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @GetMapping("/list")
-    public PageResult<${tableNameFormat}Output> queryListForCusPage(@Valid ${tableNameFormat}SelectDto input) {
-    return ${tableNameFormatOnCase}Service.queryListForCusPage(input);
+    public PageResult<${tableNameFormat}Output> queryListPage(@Valid ${tableNameFormat}SelectDto input) {
+    return ${tableNameFormatOnCase}Service.queryListPage(input);
     }
 }
