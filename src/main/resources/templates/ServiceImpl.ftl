@@ -52,6 +52,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     /**
     * @Description: 删除
     * @param input
+    * @return
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -66,6 +67,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     /***
     * @Description: 分页查询列表
     * @param input
+    * @return
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
