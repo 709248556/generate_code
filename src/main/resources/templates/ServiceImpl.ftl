@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.autumn.audited.OperationAuditedLog;
 
 /**
- * @Description:
+ * @Description:${tableRemark}管理服务实现
  * @author yanlianglong
  * @date ${.now?date}
  */

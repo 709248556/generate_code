@@ -26,24 +26,19 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_volunteer_unit";
+    private static final String TABLE_NAME = "sp_hot_article";
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
-    private static final List<String> SELECTDTOS =  Arrays.asList("content_type","status","news_category_id","title");
+    private static final List<String> SELECTDTOS =  Arrays.asList("article_name");
     private static final  int TABLE_PREFIX_LENGTH = 3;
 
     static {
-        INPUTS.put("title",Boolean.TRUE);
-        INPUTS.put("content_type",Boolean.TRUE);
-        INPUTS.put("intro",Boolean.TRUE);
-        INPUTS.put("file_id",Boolean.TRUE);
-        INPUTS.put("author",Boolean.TRUE);
-        INPUTS.put("is_original",Boolean.TRUE);
-        INPUTS.put("detail",Boolean.FALSE);
+        INPUTS.put("article_id",Boolean.TRUE);
+        INPUTS.put("article_name",Boolean.TRUE);
     }
 
     public static void main(String[] args) {
         DataUtil.mkDir(TARGET_PATH);
-        DataUtil.mkDir(TARGET_PATH+"/"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
+        DataUtil.mkDir(TARGET_PATH+"/"+FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         // step1 创建freeMarker配置实例

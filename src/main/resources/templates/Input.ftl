@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**  
-* @Description:
+* @Description:${tableRemark}Input类
 * @author yanlianglong
 * @date ${.now?date}
 */

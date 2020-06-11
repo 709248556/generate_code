@@ -1,6 +1,6 @@
 
 /**  
-* @Description:
+* @Description:${tableRemark}Output类
 * @author yanlianglong
 * @date ${.now?date}
 */

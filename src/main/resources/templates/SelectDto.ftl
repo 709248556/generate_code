@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 /**  
-* @Description:
+* @Description:${tableRemark}搜索DTO
 * @author yanlianglong
 * @date ${.now?date}
 */

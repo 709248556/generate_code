@@ -10,7 +10,7 @@ import java.util.Date;
 import com.autumn.audited.annotation.LogMessage;
 
 /**  
-* @Description:
+* @Description:${tableRemark}entity类
 * @author yanlianglong
 * @date ${.now?date}
 */

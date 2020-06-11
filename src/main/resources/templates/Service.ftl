@@ -2,7 +2,7 @@ import com.autumn.application.service.EditApplicationService;
 import com.autumn.mybatis.mapper.PageResult;
 
 /**
- * @Description:
+ * @Description:${tableRemark}管理服务
  * @author yanlianglong
  * @date ${.now?date}
  */
