@@ -26,9 +26,9 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_hot_article";
+    private static final String TABLE_NAME = "sp_user";
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
-    private static final List<String> SELECTDTOS =  Arrays.asList("article_name");
+    private static final List<String> SELECTDTOS =  Arrays.asList("mobile","user_name","user_status","type");
     private static final  int TABLE_PREFIX_LENGTH = 3;
 
     static {
@@ -108,21 +108,13 @@ public class GenerateController {
 
             // step6 输出文件
             entityTemplate.process(dataMap, entityOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Entity文件创建成功 !");
             repositoryTemplate.process(dataMap, repositoryOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Repository文件创建成功 !");
             controllerTemplate.process(dataMap, controllerOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Controller文件创建成功 !");
             inputTemplate.process(dataMap, inputOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Input文件创建成功 !");
             outputTemplate.process(dataMap, outputOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^Output文件创建成功 !");
             selectDTOTemplate.process(dataMap, selectDtoOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^SelectDto文件创建成功 !");
             serviceTemplate.process(dataMap, serviceOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^ServiceOut文件创建成功 !");
             serviceImplTemplate.process(dataMap, serviceImplOut);
-            System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^ServiceImplOut文件创建成功 !");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
