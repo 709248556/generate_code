@@ -22,9 +22,6 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         ${tableNameFormat}Output, ${tableNameFormat}Output>
         implements ${tableNameFormat}Service {
 
-    @Autowired
-    private OperationAuditedLog operationAuditedLog;
-
     @Override
     public String getModuleName() {
         return "${tableRemark}管理";
@@ -59,9 +56,9 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     public ${tableNameFormat}Output deleteById(BaseIdDto input) {
         ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
         ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
-        this.getRepository().update(${tableNameFormatOnCase});
-        operationAuditedLog.addLog(this.getModuleName(),"删除",${tableNameFormatOnCase});
-        return AutoMapUtils.map(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
+        ${tableNameFormat}Output ${tableNameFormatOnCase}Output = AutoMapUtils.map(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
+        this.update(${tableNameFormatOnCase}Output);
+        return ${tableNameFormatOnCase}Output;
     }
 
     /***
@@ -81,16 +78,16 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     <#list baseResultMapVoList as baseResultMapVo >
         <#if selectDTO == baseResultMapVo.column>
         <#if "String" == baseResultMapVo.DTOType>
-        if (StringUtils.isNotNullOrBlank(input.get${baseResultMapVo.property}())) {
-            query.getQuery().lambda().where().like(${tableNameFormat}::get${baseResultMapVo.property}, input.get${baseResultMapVo.property}().trim());
+        if (StringUtils.isNotNullOrBlank(input.get${baseResultMapVo.columnNameUpperCase}())) {
+            query.getQuery().lambda().where().like(${tableNameFormat}::get${baseResultMapVo.columnNameUpperCase}, input.get${baseResultMapVo.columnNameUpperCase}().trim());
         }
         </#if>
         <#if "Long" == baseResultMapVo.DTOType||"Integer" == baseResultMapVo.DTOType>
-        if (input.get${baseResultMapVo.property}()!= null) {
-            if (!input.isLegal(input.get${baseResultMapVo.property}())) {
+        if (input.get${baseResultMapVo.columnNameUpperCase}()!= null) {
+            if (!input.isLegal(input.get${baseResultMapVo.columnNameUpperCase}())) {
                 return emptyPageResult();
             }
-            query.getQuery().lambda().where().eq(${tableNameFormat}::get${baseResultMapVo.property}, input.get${baseResultMapVo.property}());
+            query.getQuery().lambda().where().eq(${tableNameFormat}::get${baseResultMapVo.columnNameUpperCase}, input.get${baseResultMapVo.columnNameUpperCase}());
         }
         </#if>
         </#if>

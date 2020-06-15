@@ -4,7 +4,6 @@ import com.example.generate_code.util.DataUtil;
 import com.example.generate_code.util.DatabaseUtil;
 import com.example.generate_code.util.FormatUtil;
 import com.example.generate_code.vo.BaseResultMapVo;
-import com.example.generate_code.vo.SearchVo;
 import com.example.generate_code.vo.UniqueIndexVO;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.Date;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -26,14 +23,26 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_user";
+    private static final String TABLE_NAME = "sp_draw_user_win";
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
-    private static final List<String> SELECTDTOS =  Arrays.asList("mobile","user_name","user_status","type");
+    private static final List<String> SELECTDTOS =  Arrays.asList("nickname","prize_name","type","status");
     private static final  int TABLE_PREFIX_LENGTH = 3;
 
     static {
-        INPUTS.put("article_id",Boolean.TRUE);
-        INPUTS.put("article_name",Boolean.TRUE);
+        INPUTS.put("user_id",Boolean.TRUE);
+        INPUTS.put("activity_id",Boolean.TRUE);
+        INPUTS.put("nickname",Boolean.TRUE);
+        INPUTS.put("type",Boolean.TRUE);
+        INPUTS.put("status",Boolean.TRUE);
+        INPUTS.put("prize_name",Boolean.TRUE);
+        INPUTS.put("activity_prize_id",Boolean.TRUE);
+        INPUTS.put("file_id",Boolean.TRUE);
+        INPUTS.put("prize_id",Boolean.TRUE);
+        INPUTS.put("start_at",Boolean.TRUE);
+        INPUTS.put("end_at",Boolean.TRUE);
+        INPUTS.put("integral_num",Boolean.TRUE);
+
+        INPUTS.put("win_code",Boolean.FALSE);
     }
 
     public static void main(String[] args) {

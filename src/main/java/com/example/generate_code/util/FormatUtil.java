@@ -60,6 +60,8 @@ public class FormatUtil {
                 format.add("Long");
             } else if (item.equalsIgnoreCase("BIGINT UNSIGNED")) {
                 format.add("Long");
+            }  else if (item.equalsIgnoreCase("DECIMAL UNSIGNED")) {
+                format.add("double");
             } else if (item.equalsIgnoreCase("DATETIME")) {
                 format.add("Date");
             } else if (item.equalsIgnoreCase("INT")) {
@@ -70,6 +72,8 @@ public class FormatUtil {
                 format.add("double");
             }else if (item.equalsIgnoreCase("LONGTEXT")) {
                 format.add("String");
+            }else if (item.equalsIgnoreCase("INT UNSIGNED")) {
+                format.add("Integer");
             }else {
                 format.add("UNDEFINE");
             }
@@ -93,6 +97,8 @@ public class FormatUtil {
                 format.add("DATE");
             } else if (item.equalsIgnoreCase("INT")) {
                 format.add("INTEGER");
+            }else if (item.equalsIgnoreCase("INT UNSIGNED")) {
+                format.add("Integer");
             }else {
                 format.add("UNDEFINE");
             }
