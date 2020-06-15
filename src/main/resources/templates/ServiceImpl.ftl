@@ -6,7 +6,6 @@ import com.autumn.util.data.PageQueryBuilder;
 import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.autumn.audited.OperationAuditedLog;
 
 /**
  * @Description:${tableRemark}管理服务实现
