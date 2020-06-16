@@ -5,17 +5,14 @@ import com.example.generate_code.util.DatabaseUtil;
 import com.example.generate_code.util.FormatUtil;
 import com.example.generate_code.vo.BaseResultMapVo;
 import com.example.generate_code.vo.UniqueIndexVO;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.RestController;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.*;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.*;
+import java.util.*;
 
 
 @RestController
@@ -23,31 +20,28 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_draw_user_win";
+    private static final String TABLE_NAME = "sp_banner";
+    private static final String LEFT_TABLE = "sp_resource_file";
+    private static final String LEFT = "left";
+
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
-    private static final List<String> SELECTDTOS =  Arrays.asList("nickname","prize_name","type","status");
+    private static final List<String> SELECTDTOS =  Arrays.asList("is_show","type");
     private static final  int TABLE_PREFIX_LENGTH = 3;
 
     static {
-        INPUTS.put("user_id",Boolean.TRUE);
-        INPUTS.put("activity_id",Boolean.TRUE);
-        INPUTS.put("nickname",Boolean.TRUE);
-        INPUTS.put("type",Boolean.TRUE);
-        INPUTS.put("status",Boolean.TRUE);
-        INPUTS.put("prize_name",Boolean.TRUE);
-        INPUTS.put("activity_prize_id",Boolean.TRUE);
+        INPUTS.put("title",Boolean.TRUE);
         INPUTS.put("file_id",Boolean.TRUE);
-        INPUTS.put("prize_id",Boolean.TRUE);
-        INPUTS.put("start_at",Boolean.TRUE);
-        INPUTS.put("end_at",Boolean.TRUE);
-        INPUTS.put("integral_num",Boolean.TRUE);
+        INPUTS.put("type",Boolean.TRUE);
+        INPUTS.put("source",Boolean.TRUE);
+        INPUTS.put("resource_id",Boolean.TRUE);
 
-        INPUTS.put("win_code",Boolean.FALSE);
+//        INPUTS.put("win_code",Boolean.FALSE);
     }
 
     public static void main(String[] args) {
         DataUtil.mkDir(TARGET_PATH);
         DataUtil.mkDir(TARGET_PATH+"/"+FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
+        DataUtil.mkDir(TARGET_PATH+"/"+LEFT);
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         // step1 创建freeMarker配置实例
@@ -60,6 +54,7 @@ public class GenerateController {
         Writer controllerOut = null;
         Writer serviceOut = null;
         Writer serviceImplOut = null;
+        Writer serviceImplLeftOut = null;
         try {
 
             // step2 获取模版路径
@@ -75,6 +70,7 @@ public class GenerateController {
             Template selectDTOTemplate = configuration.getTemplate("SelectDTO.ftl");
             Template serviceTemplate = configuration.getTemplate("Service.ftl");
             Template serviceImplTemplate = configuration.getTemplate("ServiceImpl.ftl");
+            Template serviceImplLeftTemplate = configuration.getTemplate("ServiceImplLeft.ftl");
 
             //获取数据模型
             List<BaseResultMapVo> baseResultMapVoList = DatabaseUtil.getBaseResultMap(TABLE_NAME);
@@ -95,6 +91,11 @@ public class GenerateController {
             dataMap.put("tableShortName",FormatUtil.getShortName(TABLE_NAME).equals("as")  ? "as1" : FormatUtil.getShortName(TABLE_NAME) );
             dataMap.put("URL",FormatUtil._splitOnCase(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("fristColumnName",FormatUtil.columnNames(DatabaseUtil.getColumnNames(TABLE_NAME)).get(0));//第一个字段名areaId
+            //连表查询
+            dataMap.put("leftTableName",LEFT_TABLE);
+            dataMap.put("leftTableShortName",FormatUtil.getShortName(LEFT_TABLE).equals("as")  ? "as1" : FormatUtil.getShortName(LEFT_TABLE) );
+            dataMap.put("leftTableNameFormat",FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH)));
+            dataMap.put("leftTableNameFormatOnCase",FormatUtil._split(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH)));
 
             // step5 生成数据
             File entityFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+".java");
@@ -102,6 +103,7 @@ public class GenerateController {
             File controllerFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
             File serviceFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
             File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
+            File serviceImplLeftFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File inputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Input.java");
             File outputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Output.java");
             File selectDtoFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"SelectDto.java");
@@ -114,6 +116,7 @@ public class GenerateController {
             selectDtoOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectDtoFile)));
             serviceOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceFile)));
             serviceImplOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplFile)));
+            serviceImplLeftOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplLeftFile)));
 
             // step6 输出文件
             entityTemplate.process(dataMap, entityOut);
@@ -124,6 +127,7 @@ public class GenerateController {
             selectDTOTemplate.process(dataMap, selectDtoOut);
             serviceTemplate.process(dataMap, serviceOut);
             serviceImplTemplate.process(dataMap, serviceImplOut);
+            serviceImplLeftTemplate.process(dataMap, serviceImplLeftOut);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -151,6 +155,9 @@ public class GenerateController {
                 }
                 if (null != serviceImplOut) {
                     serviceImplOut.flush();
+                }
+                if (null != serviceImplLeftOut) {
+                    serviceImplLeftOut.flush();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();
