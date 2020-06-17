@@ -30,7 +30,7 @@ public class ${tableNameFormat}Input extends EntityDto<Long>{
 	<#elseif  baseResultMapVo.DTOType =="Integer">@NotNull(message = "${baseResultMapVo.columnComment}不能为空")
 	</#if>
 		</#if>
-	@ApiModelProperty(value = "${baseResultMapVo.columnComment},不能为空")
+	@ApiModelProperty(value = "${baseResultMapVo.columnComment}")
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 	</#if>
 </#list>
