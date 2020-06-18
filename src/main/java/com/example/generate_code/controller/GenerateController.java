@@ -21,7 +21,7 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_article";
+    private static final String TABLE_NAME = "sp_banner";
     private static final String LEFT_TABLE = "sp_resource";
     private static final String LEFTJOINON = "file_id";
     private static final String LEFT = "left";
@@ -35,23 +35,22 @@ public class GenerateController {
 
     static {
         //intput
-//        INPUTS.put("title",Boolean.TRUE);
-//        INPUTS.put("file_id",Boolean.TRUE);
-//        INPUTS.put("type",Boolean.TRUE);
-//        INPUTS.put("source",Boolean.TRUE);
-//        INPUTS.put("resource_id",Boolean.TRUE);
+        INPUTS.put("status",Boolean.TRUE);
 
-        INPUTS.put("source",Boolean.FALSE);
-        INPUTS.put("jump_url",Boolean.FALSE);
+//        INPUTS.put("source",Boolean.FALSE);
+//        INPUTS.put("jump_url",Boolean.FALSE);
 
         //selectDTOs
-        SELECTDTOS.add("");
+        SELECTDTOS.add("status");
 
         //leftQueryVOS
-//        LeftQueryVO leftQueryVO = new LeftQueryVO();
-//        leftQueryVO.setProperty("name");
-//        leftQueryVO.setDTOType();
-//        leftQueryVOS.add();
+        LeftQueryVO leftQueryVO = new LeftQueryVO();
+        leftQueryVO.setDTOType("String");
+        leftQueryVO.setColumnComment("");//注释
+        leftQueryVO.setColumn("");//aread_id
+        leftQueryVO.setProperty(FormatUtil._splitAll(leftQueryVO.getColumnComment()));//
+
+        leftQueryVOS.add(leftQueryVO);
     }
 
     public static void main(String[] args) {
