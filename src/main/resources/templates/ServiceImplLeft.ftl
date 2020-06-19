@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @Description:${tableRemark}管理服务实现
+ * @Description:
  * @author yanlianglong
  * @date ${.now?date}
  */
@@ -103,10 +103,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
-        EntityQueryWrapper<${tableNameFormat}${leftTableNameFormat}Query> wrapper = new EntityQueryWrapper<>(${tableNameFormat}${leftTableNameFormat}Query.class);
+        EntityQueryWrapper<${tableNameFormat}${leftTableNameFormat}Query> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
         //TODO 搜索条件
-        List<${tableNameFormat}${leftTableNameFormat}Query> ${tableNameFormatOnCase} = this.getQueryRepository().selectForList(wrapper);
-        return AutoMapUtils.mapForList(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
+        List<${tableNameFormat}${leftTableNameFormat}Query> ${tableNameFormatOnCase}List = this.getQueryRepository().selectForList(wrapper);
+        return AutoMapUtils.mapForList(${tableNameFormatOnCase}List, ${tableNameFormat}Output.class);
     }
 }
 

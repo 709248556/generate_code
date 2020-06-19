@@ -9,7 +9,6 @@ import com.example.generate_code.vo.UniqueIndexVO;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.util.ResourceUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
@@ -21,11 +20,12 @@ public class GenerateController {
 
     private static final String TEMPLATE_PATH = "classpath:templates";
     private static final String TARGET_PATH = "src/main/java/com/example/generate_code/target";
-    private static final String TABLE_NAME = "sp_banner";
-    private static final String LEFT_TABLE = "sp_resource";
-    private static final String LEFTJOINON = "file_id";
     private static final String LEFT = "left";
+    private static final String TREE = "tree";
 
+    private static final String TABLE_NAME = "sp_menu_category";
+    private static final String LEFT_TABLE = "sp_news_category";
+    private static final String LEFTJOINON = "menu_id";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -58,6 +58,7 @@ public class GenerateController {
         DataUtil.mkDir(TARGET_PATH);
         DataUtil.mkDir(TARGET_PATH+"/"+FormatUtil._split(TABLE_NAME.substring(TABLE_PREFIX_LENGTH)));
         DataUtil.mkDir(TARGET_PATH+"/"+LEFT);
+        DataUtil.mkDir(TARGET_PATH+"/"+TREE);
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         // step1 创建freeMarker配置实例
@@ -73,6 +74,7 @@ public class GenerateController {
         Writer serviceImplLeftOut = null;
         Writer leftQueryOUT = null;
         Writer queryRepositorytOut = null;
+        Writer leftOutputOut = null;
         try {
 
             // step2 获取模版路径
@@ -91,6 +93,7 @@ public class GenerateController {
             Template serviceImplLeftTemplate = configuration.getTemplate("ServiceImplLeft.ftl");
             Template leftQueryTemplate = configuration.getTemplate("LeftQuery.ftl");
             Template queryRepositoryTemplate = configuration.getTemplate("QueryRepository.ftl");
+            Template leftOutputTemplate = configuration.getTemplate("LeftOutput.ftl");
 
             //获取数据模型
             List<BaseResultMapVo> baseResultMapVoList = DatabaseUtil.getBaseResultMap(TABLE_NAME);
@@ -128,6 +131,7 @@ public class GenerateController {
             File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File serviceImplLeftFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File leftQueryFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"Query.java");
+            File leftOutPutFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"Output.java");
             File queryRepositoryFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"QueryRepository.java");
             File inputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Input.java");
             File outputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Output.java");
@@ -144,6 +148,7 @@ public class GenerateController {
             serviceImplLeftOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplLeftFile)));
             leftQueryOUT = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(leftQueryFile)));
             queryRepositorytOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(queryRepositoryFile)));
+            leftOutputOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(leftOutPutFile)));
 
             // step6 输出文件
             entityTemplate.process(dataMap, entityOut);
@@ -157,6 +162,7 @@ public class GenerateController {
             serviceImplLeftTemplate.process(dataMap, serviceImplLeftOut);
             leftQueryTemplate.process(dataMap, leftQueryOUT);
             queryRepositoryTemplate.process(dataMap, queryRepositorytOut);
+            leftOutputTemplate.process(dataMap, leftOutputOut);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -193,6 +199,9 @@ public class GenerateController {
                 }
                 if (null != queryRepositorytOut) {
                     queryRepositorytOut.flush();
+                }
+                if (null != leftOutputOut) {
+                    leftOutputOut.flush();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();

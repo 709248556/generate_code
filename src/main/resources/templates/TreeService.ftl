@@ -7,7 +7,7 @@ import com.autumn.mybatis.mapper.PageResult;
  * @date ${.now?date}
  */
 public interface ${tableNameFormat}Service extends
-        EditApplicationService<Long, ${tableNameFormat}Input, ${tableNameFormat}Input, ${tableNameFormat}Output, ${tableNameFormat}Output>{
+        TreeAppService<Long, ${tableNameFormat}Input, ${tableNameFormat}Input, ${tableNameFormat}Output, ${tableNameFormat}Output>{
 
     /**
      * 删除
@@ -18,11 +18,11 @@ public interface ${tableNameFormat}Service extends
     ${tableNameFormat}Output deleteById(BaseIdDto input);
 
     /**
-     * 分页查找列表
-     *
-     * @param input
-     * @return
-     */
-    PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input);
+    * 查询
+    *
+    * @param input
+    * @return
+    */
+    List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input);
 }
 

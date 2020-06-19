@@ -2,7 +2,8 @@ import com.autumn.domain.repositories.DefaultEntityRepository;
 import com.autumn.mybatis.mapper.annotation.MapperViewSelect;
 import org.springframework.stereotype.Repository;
 
-/**  
+/**
+* @Description:
 * @author yanlianglong
 * @date ${.now?date}
 */

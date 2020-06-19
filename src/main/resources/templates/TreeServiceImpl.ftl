@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @date ${.now?date}
  */
 @Service
-public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationService<
+public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
         ${tableNameFormat},
         ${tableNameFormat}Repository,
         ${tableNameFormat}, ${tableNameFormat}Repository,
@@ -24,11 +24,6 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     @Override
     public String getModuleName() {
         return "${tableRemark}管理";
-    }
-
-    @Override
-    protected void queryByOrder(EntityQueryWrapper<${tableNameFormat}> query) {
-        query.lambda().orderByDescending(${tableNameFormat}::getCreatedAt);
     }
 
     /**
@@ -61,38 +56,22 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     }
 
     /***
-    * @Description: 分页查询列表
+    * @Description: 查询
     * @param input
     * @return
     */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
-        PageQueryBuilder<${tableNameFormat}> query = new PageQueryBuilder<>(this.getQueryEntityClass());
-        this.generateQueryListColumn(query.getQuery());
-        this.systemByCriteria(query.getQuery());
-        this.queryByOrder(query.getQuery());
-        query.page(input.getCurrentPage(), input.getPageSize());
-<#list selectDTOs as selectDTO >
-    <#list baseResultMapVoList as baseResultMapVo >
-        <#if selectDTO == baseResultMapVo.column>
-        <#if "String" == baseResultMapVo.DTOType>
-        if (StringUtils.isNotNullOrBlank(input.get${baseResultMapVo.columnNameUpperCase}())) {
-            query.getQuery().lambda().where().like(${tableNameFormat}::get${baseResultMapVo.columnNameUpperCase}, input.get${baseResultMapVo.columnNameUpperCase}().trim());
-        }
-        </#if>
-        <#if "Long" == baseResultMapVo.DTOType||"Integer" == baseResultMapVo.DTOType>
-        if (input.get${baseResultMapVo.columnNameUpperCase}()!= null) {
-            if (!input.isLegal(input.get${baseResultMapVo.columnNameUpperCase}())) {
-                return emptyPageResult();
-            }
-            query.getQuery().lambda().where().eq(${tableNameFormat}::get${baseResultMapVo.columnNameUpperCase}, input.get${baseResultMapVo.columnNameUpperCase}());
-        }
-        </#if>
-        </#if>
-    </#list>
-</#list>
-        return query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
+    public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
+        EntityQueryWrapper<${tableNameFormat}> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
+        //TODO 搜索条件
+        wrapper.lambda().where()
+                .of().orderByDescending(NewsCategory::getCreatedAt);
+        List<${tableNameFormat}> list = this.getRepository().selectForList(wrapper);
+        List<${tableNameFormat}Output> outList = AutoMapUtils.mapForList(list,${tableNameFormat}Output.class);
+        Collection<${tableNameFormat}Output> tMenus = TreeUtil.toTree(${tableNameFormat}Outputs, "id", "parentId", "children", ${tableNameFormat}Output.class);
+        List<${tableNameFormat}Output> list = new ArrayList<${tableNameFormat}Output>(tMenus);
+        return list;
     }
 }
 

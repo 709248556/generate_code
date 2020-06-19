@@ -4,7 +4,7 @@ import com.zjsm.sp.entities.User;
 import org.springframework.stereotype.Repository;
 
 /**  
-* @Description:${tableRemark}Repository类
+* @Description:
 * @author yanlianglong
 * @date ${.now?date}
 */

@@ -1,7 +1,7 @@
 import com.autumn.mybatis.mapper.annotation.ViewTable;
 import lombok.Data;
 /**  
-* @Description:${tableRemark}Output类
+* @Description:
 * @author yanlianglong
 * @date ${.now?date}
 */

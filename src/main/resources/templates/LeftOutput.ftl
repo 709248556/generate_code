@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class ${tableNameFormat}Output extends ${tableNameFormat}Input{
 
-	private static final long serialVersionUID = ${serialVersionUID3}L ;
-
+<#list leftQueryVOS as leftQueryVO >
 	/**
-	 * 是否删除
-	 */
-	private boolean delete;
+	* ${leftQueryVO.columnComment}
+	*/
+	private ${leftQueryVO.DTOType} ${leftQueryVO.property};
+</#list>
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 * @date ${.now?date}
 */
 @Data
-public class ${tableNameFormat}Input extends EntityDto<Long>{
+public class ${tableNameFormat}Input extends TreeInput{
 
     private static final long serialVersionUID = ${serialVersionUID2}L ;
 

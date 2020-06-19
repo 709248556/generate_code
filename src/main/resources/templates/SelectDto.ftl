@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**  
-* @Description:${tableRemark}搜索DTO
+* @Description:
 * @author yanlianglong
 * @date ${.now?date}
 */
