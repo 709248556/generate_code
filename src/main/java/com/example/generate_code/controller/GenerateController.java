@@ -75,6 +75,10 @@ public class GenerateController {
         Writer leftQueryOUT = null;
         Writer queryRepositorytOut = null;
         Writer leftOutputOut = null;
+        Writer treeOutputOut = null;
+        Writer treeInputOut = null;
+        Writer treeServiceOut = null;
+        Writer treeServiceImplOut = null;
         try {
 
             // step2 获取模版路径
@@ -94,6 +98,10 @@ public class GenerateController {
             Template leftQueryTemplate = configuration.getTemplate("LeftQuery.ftl");
             Template queryRepositoryTemplate = configuration.getTemplate("QueryRepository.ftl");
             Template leftOutputTemplate = configuration.getTemplate("LeftOutput.ftl");
+            Template treeInputTemplate = configuration.getTemplate("TreeInput.ftl");
+            Template treeOutputTemplate = configuration.getTemplate("TreeOutput.ftl");
+            Template treeServiceTemplate = configuration.getTemplate("TreeService.ftl");
+            Template treeServiceImplTemplate = configuration.getTemplate("TreeServiceImpl.ftl");
 
             //获取数据模型
             List<BaseResultMapVo> baseResultMapVoList = DatabaseUtil.getBaseResultMap(TABLE_NAME);
@@ -128,13 +136,17 @@ public class GenerateController {
             File repositoryFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Repository.java");
             File controllerFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Controller.java");
             File serviceFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
+            File treeServiceFile = new File(TARGET_PATH + "\\"+TREE+"\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
             File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
+            File treeServiceImplFile = new File(TARGET_PATH +"\\"+TREE+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File serviceImplLeftFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File leftQueryFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"Query.java");
             File leftOutPutFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"Output.java");
             File queryRepositoryFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"QueryRepository.java");
             File inputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Input.java");
+            File treeInputFile = new File(TARGET_PATH +"\\"+TREE+"\\"+ FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Input.java");
             File outputFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Output.java");
+            File treeOutputFile = new File(TARGET_PATH +"\\"+TREE+"\\"+ FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Output.java");
             File selectDtoFile = new File(TARGET_PATH +"\\"+FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"SelectDto.java");
 
             entityOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(entityFile)));
@@ -149,6 +161,10 @@ public class GenerateController {
             leftQueryOUT = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(leftQueryFile)));
             queryRepositorytOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(queryRepositoryFile)));
             leftOutputOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(leftOutPutFile)));
+            treeInputOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(treeInputFile)));
+            treeOutputOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(treeOutputFile)));
+            treeServiceOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(treeServiceFile)));
+            treeServiceImplOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(treeServiceImplFile)));
 
             // step6 输出文件
             entityTemplate.process(dataMap, entityOut);
@@ -163,6 +179,10 @@ public class GenerateController {
             leftQueryTemplate.process(dataMap, leftQueryOUT);
             queryRepositoryTemplate.process(dataMap, queryRepositorytOut);
             leftOutputTemplate.process(dataMap, leftOutputOut);
+            treeInputTemplate.process(dataMap, treeInputOut);
+            treeOutputTemplate.process(dataMap, treeOutputOut);
+            treeServiceTemplate.process(dataMap, treeServiceOut);
+            treeServiceImplTemplate.process(dataMap, treeServiceImplOut);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
