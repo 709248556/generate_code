@@ -68,7 +68,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
-        PageQueryBuilder<${tableNameFormat}${tableNameFormat}Query> query = new PageQueryBuilder<>(this.getQueryEntityClass());
+        PageQueryBuilder<${tableNameFormat}${leftTableNameFormat}Query> query = new PageQueryBuilder<>(this.getQueryEntityClass());
         this.generateQueryListColumn(query.getQuery());
         this.systemByCriteria(query.getQuery());
         this.queryByOrder(query.getQuery());
@@ -93,6 +93,20 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     </#list>
 </#list>
         return query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
+    }
+
+    /***
+    * @Description: 查询所有
+    * @param input
+    * @return
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
+        EntityQueryWrapper<${tableNameFormat}${leftTableNameFormat}Query> wrapper = new EntityQueryWrapper<>(${tableNameFormat}${leftTableNameFormat}Query.class);
+        //TODO 搜索条件
+        List<${tableNameFormat}${leftTableNameFormat}Query> ${tableNameFormatOnCase} = this.getQueryRepository().selectForList(wrapper);
+        return AutoMapUtils.mapForList(${tableNameFormatOnCase}, ${tableNameFormat}Output.class);
     }
 }
 

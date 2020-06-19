@@ -9,17 +9,10 @@ import lombok.Data;
 @Data
 @ViewTable
 public class ${tableNameFormat}${leftTableNameFormat}Query extends ${tableNameFormat}{
-
-<#assign leftQuerysMap = leftQuerys />
-<#assign  keys=leftQuerysMap?keys/>
-<#list keys as key>
-    <#list baseResultMapVoList as baseResultMapVo >
-        <#if key == baseResultMapVo.column>
+    <#list leftQueryVOS as leftQueryVO >
 	/**
-	* ${baseResultMapVo.columnComment}
+	* ${leftQueryVO.columnComment}
 	*/
-	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
-        </#if>
+	private ${leftQueryVO.DTOType} ${leftQueryVO.property};
     </#list>
-</#list>
 }

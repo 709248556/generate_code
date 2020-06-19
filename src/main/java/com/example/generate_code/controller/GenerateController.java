@@ -46,9 +46,10 @@ public class GenerateController {
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setColumnComment("");//注释
-        leftQueryVO.setColumn("");//aread_id
-        leftQueryVO.setProperty(FormatUtil._splitAll(leftQueryVO.getColumnComment()));//
+        leftQueryVO.setJdbcType("path");
+        leftQueryVO.setColumnComment("文件地址");//注释
+        leftQueryVO.setColumn("img_path");//aread_id
+        leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);
     }
@@ -117,6 +118,7 @@ public class GenerateController {
             dataMap.put("leftTableNameFormat",FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("leftTableNameFormatSub",LEFT_TABLE.substring(TABLE_PREFIX_LENGTH));
             dataMap.put("leftTableNameFormatOnCase",FormatUtil._split(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH)));
+            dataMap.put("leftQueryVOS",leftQueryVOS);
 
             // step5 生成数据
             File entityFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+".java");
@@ -153,7 +155,7 @@ public class GenerateController {
             serviceTemplate.process(dataMap, serviceOut);
             serviceImplTemplate.process(dataMap, serviceImplOut);
             serviceImplLeftTemplate.process(dataMap, serviceImplLeftOut);
-//            leftQueryTemplate.process(dataMap, leftQueryOUT);
+            leftQueryTemplate.process(dataMap, leftQueryOUT);
             queryRepositoryTemplate.process(dataMap, queryRepositorytOut);
         } catch (Exception e) {
             e.printStackTrace();
