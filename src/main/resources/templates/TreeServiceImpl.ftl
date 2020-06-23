@@ -66,12 +66,12 @@ public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
         EntityQueryWrapper<${tableNameFormat}> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
         //TODO 搜索条件
         wrapper.lambda().where()
-                .of().orderByDescending(NewsCategory::getCreatedAt);
+                .of().orderByDescending(${tableNameFormat}::getGmtCreate);
         List<${tableNameFormat}> list = this.getRepository().selectForList(wrapper);
         List<${tableNameFormat}Output> outList = AutoMapUtils.mapForList(list,${tableNameFormat}Output.class);
-        Collection<${tableNameFormat}Output> tMenus = TreeUtil.toTree(${tableNameFormat}Outputs, "id", "parentId", "children", ${tableNameFormat}Output.class);
-        List<${tableNameFormat}Output> list = new ArrayList<${tableNameFormat}Output>(tMenus);
-        return list;
+        Collection<${tableNameFormat}Output> tMenus = TreeUtil.toTree(outList, "id", "parentId", "children", ${tableNameFormat}Output.class);
+        List<${tableNameFormat}Output> result = new ArrayList<${tableNameFormat}Output>(tMenus);
+        return result;
     }
 }
 
