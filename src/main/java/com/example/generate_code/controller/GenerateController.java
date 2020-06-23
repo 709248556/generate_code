@@ -23,9 +23,9 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_menu_category";
-    private static final String LEFT_TABLE = "sp_news_category";
-    private static final String LEFTJOINON = "menu_id";
+    private static final String TABLE_NAME = "sp_media_channel";
+    private static final String LEFT_TABLE = "sp_resource_file";
+    private static final String LEFTJOINON = "file_id";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -35,12 +35,14 @@ public class GenerateController {
 
     static {
         //intput
-        INPUTS.put("status",Boolean.TRUE);
+        INPUTS.put("name",Boolean.TRUE);
+        INPUTS.put("url",Boolean.TRUE);
 
 //        INPUTS.put("source",Boolean.FALSE);
 //        INPUTS.put("jump_url",Boolean.FALSE);
 
         //selectDTOs
+        SELECTDTOS.add("type");
         SELECTDTOS.add("status");
 
         //leftQueryVOS

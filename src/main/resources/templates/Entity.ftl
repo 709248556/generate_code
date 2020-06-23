@@ -10,10 +10,10 @@ import java.util.Date;
 import com.autumn.audited.annotation.LogMessage;
 
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @ToString(callSuper = true)
 @Getter
 @Setter

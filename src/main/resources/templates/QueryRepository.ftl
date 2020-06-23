@@ -3,10 +3,10 @@ import com.autumn.mybatis.mapper.annotation.MapperViewSelect;
 import org.springframework.stereotype.Repository;
 
 /**
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Repository
 @MapperViewSelect("SELECT ${tableShortName}.*<#list leftQueryVOS as leftQueryVO >,${leftTableShortName}.${leftQueryVO.jdbcType} as ${leftQueryVO.column} </#list> FROM ${tableName} ${tableShortName} LEFT JOIN ${leftTableName} ${leftTableShortName} ON ${leftTableShortName}.id = ${tableShortName}.${leftJoinOn}")
 public interface ${tableNameFormat}${leftTableNameFormat}QueryRepository extends DefaultEntityRepository<${tableNameFormat}${leftTableNameFormat}Query>{

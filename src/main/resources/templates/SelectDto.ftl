@@ -4,10 +4,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Data
 public class ${tableNameFormat}SelectDto extends BasePageInput{
 

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
-* @Description: ${tableRemark}控制器
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description: ${tableRemark}控制器
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Slf4j
 @RestController
 @RequestMapping("/${tableNameFormatOnCase}")

@@ -7,10 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Data
 public class ${tableNameFormat}Input extends TreeInput{
 

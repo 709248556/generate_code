@@ -1,11 +1,10 @@
 import com.autumn.mybatis.mapper.annotation.ViewTable;
 import lombok.Data;
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
-
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Data
 @ViewTable
 public class ${tableNameFormat}${leftTableNameFormat}Query extends ${tableNameFormat}{

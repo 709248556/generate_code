@@ -4,10 +4,10 @@ import com.zjsm.sp.entities.User;
 import org.springframework.stereotype.Repository;
 
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Repository
 public interface ${tableNameFormat}Repository extends DefaultEntityRepository<${tableNameFormat}>{
 

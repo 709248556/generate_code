@@ -2,10 +2,10 @@ import lombok.Data;
 import com.autumn.zero.common.library.application.dto.tree.output.TreeOutput;
 
 /**  
-* @Description:
-* @author yanlianglong
-* @date ${.now?date}
-*/
+ * @Description:
+ * @author yanlianglong
+ * @date ${.now?date}
+ */
 @Data
 public class ${tableNameFormat}Output extends TreeOutput{
 
