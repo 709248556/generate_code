@@ -47,10 +47,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     }
 
     /**
-    * @Description: 删除
-    * @param input
-    * @return
-    */
+     * @Description: 删除
+     * @param input
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = AutumnException.class)
     public ${tableNameFormat}Output deleteById(BaseIdDto input) {
@@ -62,10 +62,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     }
 
     /***
-    * @Description: 分页查询列表
-    * @param input
-    * @return
-    */
+     * @Description: 分页查询列表
+     * @param input
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = AutumnException.class)
     public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
@@ -97,10 +97,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     }
 
     /***
-    * @Description: 查询所有
-    * @param input
-    * @return
-    */
+     * @Description: 查询所有
+     * @param input
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = AutumnException.class)
     public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {

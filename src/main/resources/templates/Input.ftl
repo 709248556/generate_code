@@ -22,8 +22,8 @@ public class ${tableNameFormat}Input extends EntityDto<Long>{
 <#list baseResultMapVoList as baseResultMapVo >
 	<#if key == baseResultMapVo.column>
 	/**
-	* ${baseResultMapVo.columnComment}
-	*/
+	 * ${baseResultMapVo.columnComment}
+	 */
 		<#if inputsMap[key]>
 	<#if baseResultMapVo.DTOType =="String">@NotEmpty(message = "${baseResultMapVo.columnComment}不能为空")
 	<#elseif  baseResultMapVo.DTOType =="Long">@NotNull(message = "${baseResultMapVo.columnComment}不能为空")

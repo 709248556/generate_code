@@ -18,11 +18,11 @@ public interface ${tableNameFormat}Service extends
     ${tableNameFormat}Output deleteById(BaseIdDto input);
 
     /**
-    * 查询
-    *
-    * @param input
-    * @return
-    */
+     * 查询
+     *
+     * @param input
+     * @return
+     */
     List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input);
 }
 

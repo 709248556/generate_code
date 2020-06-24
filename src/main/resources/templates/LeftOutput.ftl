@@ -9,8 +9,8 @@ public class ${tableNameFormat}Output extends ${tableNameFormat}Input{
 
 <#list leftQueryVOS as leftQueryVO >
 	/**
-	* ${leftQueryVO.columnComment}
-	*/
+	 * ${leftQueryVO.columnComment}
+	 */
 	private ${leftQueryVO.DTOType} ${leftQueryVO.property};
 </#list>
 }

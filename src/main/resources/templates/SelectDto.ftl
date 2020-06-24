@@ -17,8 +17,8 @@ public class ${tableNameFormat}SelectDto extends BasePageInput{
 <#list baseResultMapVoList as baseResultMapVo >
     <#if selectDTO == baseResultMapVo.column>
 	/**
-	* ${baseResultMapVo.columnComment}
-	*/
+	 * ${baseResultMapVo.columnComment}
+	 */
 	@ApiModelProperty(value = "${baseResultMapVo.columnComment}")
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 

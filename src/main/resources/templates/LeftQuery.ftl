@@ -10,8 +10,8 @@ import lombok.Data;
 public class ${tableNameFormat}${leftTableNameFormat}Query extends ${tableNameFormat}{
     <#list leftQueryVOS as leftQueryVO >
 	/**
-	* ${leftQueryVO.columnComment}
-	*/
+	 * ${leftQueryVO.columnComment}
+	 */
 	private ${leftQueryVO.DTOType} ${leftQueryVO.property};
     </#list>
 }

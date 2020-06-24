@@ -39,8 +39,8 @@ public class ${tableNameFormat} extends AbstractDefaultEntity implements SpEntit
 
 	<#else>
 	/**
-	* ${baseResultMapVo.columnComment}
-	*/
+	 * ${baseResultMapVo.columnComment}
+	 */
 	@LogMessage(name = "${baseResultMapVo.columnComment}",order = ${i})<#assign i = i + 1>
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 

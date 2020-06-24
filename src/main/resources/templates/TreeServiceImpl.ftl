@@ -42,10 +42,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
     }
 
     /**
-    * @Description: 删除
-    * @param input
-    * @return
-    */
+     * @Description: 删除
+     * @param input
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = AutumnException.class)
     public ${tableNameFormat}Output deleteById(BaseIdDto input) {
@@ -57,10 +57,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
     }
 
     /***
-    * @Description: 查询
-    * @param input
-    * @return
-    */
+     * @Description: 查询
+     * @param input
+     * @return
+     */
     @Override
     @Transactional(rollbackFor = AutumnException.class)
     public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {

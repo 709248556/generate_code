@@ -26,9 +26,9 @@ public class ${tableNameFormat}Controller {
 	private ${tableNameFormat}Service ${tableNameFormatOnCase}Service;
 
 	/**
-	* @Description: 添加${tableRemark}信息
-	* @Param: [${tableNameFormatOnCase}Input]
-	*/
+	 * @Description: 添加${tableRemark}信息
+	 * @Param: [${tableNameFormatOnCase}Input]
+	 */
     @ApiOperation(value = "添加${tableRemark}信息")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @PostMapping("/add")
@@ -37,9 +37,9 @@ public class ${tableNameFormat}Controller {
     }
 
 	/**
-	* @Description: 编辑${tableRemark}信息
-	* @Param: [${tableNameFormatOnCase}Input]
-	*/
+	 * @Description: 编辑${tableRemark}信息
+	 * @Param: [${tableNameFormatOnCase}Input]
+	 */
     @ApiOperation(value = "编辑${tableRemark}信息")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @PostMapping("/update")
@@ -48,9 +48,9 @@ public class ${tableNameFormat}Controller {
     }
 
 	/**
-	* @Description: 删除${tableRemark}信息
-	* @Param: [input]
-	*/
+	 * @Description: 删除${tableRemark}信息
+	 * @Param: [input]
+	 */
     @ApiOperation(value = "删除${tableRemark}信息")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @PostMapping("/deleteById")
@@ -59,9 +59,9 @@ public class ${tableNameFormat}Controller {
     }
 
 	/**
-	* @Description: 获取${tableRemark}信息详情
-	* @Param: [input]
-	*/
+	 * @Description: 获取${tableRemark}信息详情
+	 * @Param: [input]
+	 */
     @ApiOperation(value = "获取${tableRemark}信息详情")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @GetMapping("/queryById")
@@ -70,9 +70,9 @@ public class ${tableNameFormat}Controller {
     }
 
 	/**
-	* @Description: 获取${tableRemark}信息列表
-	* @Param: [input]
-	*/
+	 * @Description: 获取${tableRemark}信息列表
+	 * @Param: [input]
+	 */
     @ApiOperation(value = "获取${tableRemark}信息列表")
     @ApiResponses(value = {@ApiResponse(code = 1000, message = "OK")})
     @GetMapping("/list")
