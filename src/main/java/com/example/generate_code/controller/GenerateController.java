@@ -23,9 +23,9 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_media_channel";
-    private static final String LEFT_TABLE = "sp_resource_file";
-    private static final String LEFTJOINON = "file_id";
+    private static final String TABLE_NAME = "sp_style";
+    private static final String LEFT_TABLE = "sp_draw_prize";
+    private static final String LEFTJOINON = "activity_prize_id";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -35,22 +35,22 @@ public class GenerateController {
 
     static {
         //intput
-        INPUTS.put("name",Boolean.TRUE);
-        INPUTS.put("url",Boolean.TRUE);
+        INPUTS.put("type",Boolean.TRUE);
+        INPUTS.put("menu_category_id",Boolean.TRUE);
+        INPUTS.put("sort",Boolean.TRUE);
 
 //        INPUTS.put("source",Boolean.FALSE);
 //        INPUTS.put("jump_url",Boolean.FALSE);
 
         //selectDTOs
         SELECTDTOS.add("type");
-        SELECTDTOS.add("status");
 
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setJdbcType("path");
-        leftQueryVO.setColumnComment("文件地址");//注释
-        leftQueryVO.setColumn("img_path");//aread_id
+        leftQueryVO.setJdbcType("name");//表的字段名
+        leftQueryVO.setColumnComment("中奖状态");//注释
+        leftQueryVO.setColumn("draw_prize_name");//aread_id
         leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);

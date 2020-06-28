@@ -25,9 +25,9 @@ public class ${tableNameFormat}Input extends EntityDto<Long>{
 	 * ${baseResultMapVo.columnComment}
 	 */
 		<#if inputsMap[key]>
-	<#if baseResultMapVo.DTOType =="String">@NotEmpty(message = "${baseResultMapVo.columnComment}不能为空")
-	<#elseif  baseResultMapVo.DTOType =="Long">@NotNull(message = "${baseResultMapVo.columnComment}不能为空")
-	<#elseif  baseResultMapVo.DTOType =="Integer">@NotNull(message = "${baseResultMapVo.columnComment}不能为空")
+	<#if baseResultMapVo.DTOType =="String">@NotEmpty(message = "${baseResultMapVo.columnComment} 为空")
+	<#elseif  baseResultMapVo.DTOType =="Long">@NotNull(message = "${baseResultMapVo.columnComment} 为空")
+	<#elseif  baseResultMapVo.DTOType =="Integer">@NotNull(message = "${baseResultMapVo.columnComment} 为空")
 	</#if>
 		</#if>
 	@ApiModelProperty(value = "${baseResultMapVo.columnComment}")

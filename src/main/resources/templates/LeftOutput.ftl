@@ -11,6 +11,7 @@ public class ${tableNameFormat}Output extends ${tableNameFormat}Input{
 	/**
 	 * ${leftQueryVO.columnComment}
 	 */
+    @ApiModelProperty(value = "${leftQueryVO.columnComment}")
 	private ${leftQueryVO.DTOType} ${leftQueryVO.property};
 </#list>
 }
