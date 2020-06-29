@@ -47,6 +47,32 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     }
 
     /**
+     * 添加之后的处理
+     *
+     */
+    @Override
+    protected ${tableNameFormat}Output addAfter(${tableNameFormat}Input input,${tableNameFormat} ${tableNameFormatOnCase},EntityQueryWrapper<${tableNameFormat}> query) {
+        ${tableNameFormat}Output ${tableNameFormatOnCase}Output = super.addAfter(input,${tableNameFormatOnCase},query);
+        return ${tableNameFormatOnCase}Output;
+    }
+
+    /**
+     * 更新之前的操作
+     */
+    @Override
+    protected void updateBefore(${tableNameFormat}Input input,${tableNameFormat} entity,EntityQueryWrapper<${tableNameFormat}> wrapper) {
+        super.updateBefore(input,entity,wrapper);
+    }
+
+    /**
+    * 更新之后的操作
+    */
+    @Override
+    protected ${tableNameFormat}Output updateAfter(${tableNameFormat}Input input,${tableNameFormat} newEntity,${tableNameFormat} oldEntity,EntityQueryWrapper<${tableNameFormat}> wrapper) {
+            return super.updateAfter(input,newEntity,oldEntity,wrapper);
+    }
+
+    /**
      * @Description: 删除
      * @param input
      * @return

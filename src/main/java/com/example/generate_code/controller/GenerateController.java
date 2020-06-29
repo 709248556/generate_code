@@ -23,9 +23,9 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_style";
-    private static final String LEFT_TABLE = "sp_draw_prize";
-    private static final String LEFTJOINON = "activity_prize_id";
+    private static final String TABLE_NAME = "sp_draw_activity";
+    private static final String LEFT_TABLE = "sp_draw_activity";
+    private static final String LEFTJOINON = "activity_id";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -35,22 +35,25 @@ public class GenerateController {
 
     static {
         //intput
-        INPUTS.put("type",Boolean.TRUE);
-        INPUTS.put("menu_category_id",Boolean.TRUE);
-        INPUTS.put("sort",Boolean.TRUE);
+        INPUTS.put("activity_id",Boolean.TRUE);
+        INPUTS.put("prize_id",Boolean.TRUE);
+        INPUTS.put("win_prob",Boolean.TRUE);
+        INPUTS.put("total_num",Boolean.TRUE);
 
-//        INPUTS.put("source",Boolean.FALSE);
-//        INPUTS.put("jump_url",Boolean.FALSE);
+
+//        INPUTS.put("intro",Boolean.FALSE);
 
         //selectDTOs
-        SELECTDTOS.add("type");
+        SELECTDTOS.add("title");
+        SELECTDTOS.add("id");
+        SELECTDTOS.add("check_status");
 
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setJdbcType("name");//表的字段名
-        leftQueryVO.setColumnComment("中奖状态");//注释
-        leftQueryVO.setColumn("draw_prize_name");//aread_id
+        leftQueryVO.setJdbcType("activity_name");//表的字段名
+        leftQueryVO.setColumnComment("奖品名");//注释
+        leftQueryVO.setColumn("name");//aread_id
         leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);

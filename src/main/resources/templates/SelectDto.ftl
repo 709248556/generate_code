@@ -20,6 +20,10 @@ public class ${tableNameFormat}SelectDto extends BasePageInput{
 	 * ${baseResultMapVo.columnComment}
 	 */
 	@ApiModelProperty(value = "${baseResultMapVo.columnComment}")
+    <#if "Date" == baseResultMapVo.DTOType>
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    </#if>
 	private ${baseResultMapVo.DTOType} ${baseResultMapVo.property};
 
     </#if>
