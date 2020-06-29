@@ -6,7 +6,7 @@ import com.autumn.util.data.PageQueryBuilder;
 import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.autumn.exception.AutumnException;
+import com.autumn.exception.SpException;
 
 /**
  * @Description:
@@ -78,7 +78,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
      * @return
      */
     @Override
-    @Transactional(rollbackFor = AutumnException.class)
+    @Transactional(rollbackFor = SpException.class)
     public ${tableNameFormat}Output deleteById(BaseIdDto input) {
         ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
         ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
@@ -93,7 +93,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
      * @return
      */
     @Override
-    @Transactional(rollbackFor = AutumnException.class)
+    @Transactional(rollbackFor = SpException.class)
     public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
         PageQueryBuilder<${tableNameFormat}> query = new PageQueryBuilder<>(this.getQueryEntityClass());
         this.generateQueryListColumn(query.getQuery());
@@ -110,9 +110,6 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         </#if>
         <#if "Long" == baseResultMapVo.DTOType||"Integer" == baseResultMapVo.DTOType>
         if (input.get${baseResultMapVo.columnNameUpperCase}()!= null) {
-            if (!input.isLegal(input.get${baseResultMapVo.columnNameUpperCase}())) {
-                return emptyPageResult();
-            }
             query.getQuery().lambda().where().eq(${tableNameFormat}::get${baseResultMapVo.columnNameUpperCase}, input.get${baseResultMapVo.columnNameUpperCase}());
         }
         </#if>

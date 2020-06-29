@@ -6,7 +6,7 @@ import com.autumn.util.data.PageQueryBuilder;
 import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.autumn.exception.AutumnException;
+import com.autumn.exception.SpException;
 
 /**
  * @Description:
@@ -47,7 +47,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
      * @return
      */
     @Override
-    @Transactional(rollbackFor = AutumnException.class)
+    @Transactional(rollbackFor = SpException.class)
     public ${tableNameFormat}Output deleteById(BaseIdDto input) {
         ${tableNameFormat} ${tableNameFormatOnCase} = this.getEntity(input.getId());
         ${tableNameFormatOnCase}.setDelete(BussEnum.IsDelEnum.删除.getCode());
@@ -62,7 +62,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractTreeAppService<
      * @return
      */
     @Override
-    @Transactional(rollbackFor = AutumnException.class)
+    @Transactional(rollbackFor = SpException.class)
     public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
         EntityQueryWrapper<${tableNameFormat}> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
         //TODO 搜索条件

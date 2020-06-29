@@ -23,9 +23,9 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_draw_activity";
-    private static final String LEFT_TABLE = "sp_draw_activity";
-    private static final String LEFTJOINON = "activity_id";
+    private static final String TABLE_NAME = "sp_draw_prize";
+    private static final String LEFT_TABLE = "sp_draw_activity_prize";
+    private static final String LEFTJOINON = "prize_id";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -36,9 +36,12 @@ public class GenerateController {
     static {
         //intput
         INPUTS.put("activity_id",Boolean.TRUE);
+        INPUTS.put("type",Boolean.TRUE);
+        INPUTS.put("prize_name",Boolean.TRUE);
+        INPUTS.put("prize_level",Boolean.TRUE);
+        INPUTS.put("activity_prize_id",Boolean.TRUE);
         INPUTS.put("prize_id",Boolean.TRUE);
-        INPUTS.put("win_prob",Boolean.TRUE);
-        INPUTS.put("total_num",Boolean.TRUE);
+        INPUTS.put("user_id",Boolean.TRUE);
 
 
 //        INPUTS.put("intro",Boolean.FALSE);
@@ -51,12 +54,19 @@ public class GenerateController {
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setJdbcType("activity_name");//表的字段名
+        leftQueryVO.setJdbcType("name");//表的字段名
         leftQueryVO.setColumnComment("奖品名");//注释
-        leftQueryVO.setColumn("name");//aread_id
+        leftQueryVO.setColumn("prize_name");//aread_id
         leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
+        LeftQueryVO leftQueryVO2 = new LeftQueryVO();
+        leftQueryVO2.setDTOType("Integer");
+        leftQueryVO2.setJdbcType("type");//表的字段名
+        leftQueryVO2.setColumnComment("类型：1：非奖品，2：实物奖，3：非实物奖，4：会员积分");//注释
+        leftQueryVO2.setColumn("prize_type");//aread_id
+        leftQueryVO2.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);
+        leftQueryVOS.add(leftQueryVO2);
     }
 
     public static void main(String[] args) {
