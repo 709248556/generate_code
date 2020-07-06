@@ -23,7 +23,7 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_draw_prize";
+    private static final String TABLE_NAME = "sp_worker";
     private static final String LEFT_TABLE = "sp_draw_activity_prize";
     private static final String LEFTJOINON = "prize_id";
 
