@@ -23,9 +23,10 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_worker";
-    private static final String LEFT_TABLE = "sp_draw_activity_prize";
-    private static final String LEFTJOINON = "prize_id";
+    private static final String TABLE_NAME = "sp_showroom_type";
+    private static final String LEFT_TABLE = "sp_sms_channel";
+    private static final String LEFTJOINON = "channel_id";
+    private static final String REDIS_CONSTANT = "KPGZ_DRAW_USER_WIN_ALL";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -35,35 +36,32 @@ public class GenerateController {
 
     static {
         //intput
-        INPUTS.put("activity_id",Boolean.TRUE);
-        INPUTS.put("type",Boolean.TRUE);
-        INPUTS.put("prize_name",Boolean.TRUE);
-        INPUTS.put("prize_level",Boolean.TRUE);
-        INPUTS.put("activity_prize_id",Boolean.TRUE);
-        INPUTS.put("prize_id",Boolean.TRUE);
-        INPUTS.put("user_id",Boolean.TRUE);
+        INPUTS.put("title",Boolean.TRUE);
+        INPUTS.put("file_id",Boolean.TRUE);
+        INPUTS.put("area",Boolean.TRUE);
+        INPUTS.put("type_id",Boolean.TRUE);
+        INPUTS.put("link",Boolean.TRUE);
 
 
-//        INPUTS.put("intro",Boolean.FALSE);
-
+//        INPUTS.put("type",Boolean.FALSE);
+        INPUTS.put("condition_type",Boolean.FALSE);
+        INPUTS.put("condition_num",Boolean.FALSE);
         //selectDTOs
-        SELECTDTOS.add("title");
-        SELECTDTOS.add("id");
-        SELECTDTOS.add("check_status");
+        SELECTDTOS.add("status");
 
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setJdbcType("name");//表的字段名
-        leftQueryVO.setColumnComment("奖品名");//注释
-        leftQueryVO.setColumn("prize_name");//aread_id
+        leftQueryVO.setJdbcType("nationCode");//表的字段名
+        leftQueryVO.setColumnComment("手机地区码");//注释
+        leftQueryVO.setColumn("nation_code");//aread_id
         leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
         LeftQueryVO leftQueryVO2 = new LeftQueryVO();
         leftQueryVO2.setDTOType("Integer");
-        leftQueryVO2.setJdbcType("type");//表的字段名
-        leftQueryVO2.setColumnComment("类型：1：非奖品，2：实物奖，3：非实物奖，4：会员积分");//注释
-        leftQueryVO2.setColumn("prize_type");//aread_id
-        leftQueryVO2.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
+        leftQueryVO2.setJdbcType("app_id");//表的字段名
+        leftQueryVO2.setColumnComment("AppID");//注释
+        leftQueryVO2.setColumn("appId");//aread_id
+        leftQueryVO2.setProperty(FormatUtil._split(leftQueryVO2.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);
         leftQueryVOS.add(leftQueryVO2);
@@ -86,6 +84,7 @@ public class GenerateController {
         Writer controllerOut = null;
         Writer serviceOut = null;
         Writer serviceImplOut = null;
+        Writer serviceImplAppOut = null;
         Writer serviceImplLeftOut = null;
         Writer leftQueryOUT = null;
         Writer queryRepositorytOut = null;
@@ -109,6 +108,7 @@ public class GenerateController {
             Template selectDTOTemplate = configuration.getTemplate("SelectDTO.ftl");
             Template serviceTemplate = configuration.getTemplate("Service.ftl");
             Template serviceImplTemplate = configuration.getTemplate("ServiceImpl.ftl");
+            Template serviceImplAppTemplate = configuration.getTemplate("ServiceImplApp.ftl");
             Template serviceImplLeftTemplate = configuration.getTemplate("ServiceImplLeft.ftl");
             Template leftQueryTemplate = configuration.getTemplate("LeftQuery.ftl");
             Template queryRepositoryTemplate = configuration.getTemplate("QueryRepository.ftl");
@@ -146,6 +146,8 @@ public class GenerateController {
             dataMap.put("leftTableNameFormatOnCase",FormatUtil._split(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH)));
             dataMap.put("leftQueryVOS",leftQueryVOS);
 
+            dataMap.put("REDIS_CONSTANT",REDIS_CONSTANT);
+
             // step5 生成数据
             File entityFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+".java");
             File repositoryFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Repository.java");
@@ -153,6 +155,7 @@ public class GenerateController {
             File serviceFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
             File treeServiceFile = new File(TARGET_PATH + "\\"+TREE+"\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"Service.java");
             File serviceImplFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
+            File serviceImplAppFile = new File(TARGET_PATH + "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"AppServiceImpl.java");
             File treeServiceImplFile = new File(TARGET_PATH +"\\"+TREE+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File serviceImplLeftFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+"ServiceImpl.java");
             File leftQueryFile = new File(TARGET_PATH +"\\"+LEFT+ "\\" + FormatUtil._splitAll(TABLE_NAME.substring(TABLE_PREFIX_LENGTH))+FormatUtil._splitAll(LEFT_TABLE.substring(TABLE_PREFIX_LENGTH))+"Query.java");
@@ -172,6 +175,7 @@ public class GenerateController {
             selectDtoOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(selectDtoFile)));
             serviceOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceFile)));
             serviceImplOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplFile)));
+            serviceImplAppOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplAppFile)));
             serviceImplLeftOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(serviceImplLeftFile)));
             leftQueryOUT = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(leftQueryFile)));
             queryRepositorytOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(queryRepositoryFile)));
@@ -190,6 +194,7 @@ public class GenerateController {
             selectDTOTemplate.process(dataMap, selectDtoOut);
             serviceTemplate.process(dataMap, serviceOut);
             serviceImplTemplate.process(dataMap, serviceImplOut);
+            serviceImplAppTemplate.process(dataMap, serviceImplAppOut);
             serviceImplLeftTemplate.process(dataMap, serviceImplLeftOut);
             leftQueryTemplate.process(dataMap, leftQueryOUT);
             queryRepositoryTemplate.process(dataMap, queryRepositorytOut);

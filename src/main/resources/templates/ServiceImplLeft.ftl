@@ -27,6 +27,10 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         return "${tableRemark}管理";
     }
 
+    /**
+     * @Description: 默认排序
+     * @Param: [query]
+     */
     @Override
     protected void queryByOrder(EntityQueryWrapper<${tableNameFormat}${tableNameFormat}Query> query) {
         query.lambda().orderByDescending(${tableNameFormat}${tableNameFormat}Query::getCreatedAt);

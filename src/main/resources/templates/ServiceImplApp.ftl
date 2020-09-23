@@ -14,7 +14,7 @@ import com.autumn.exception.SpException;
  * @date ${.now?date}
  */
 @Service
-public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationService<
+public class ${tableNameFormat}AppServiceImpl extends AbstractSpEditApplicationService<
         ${tableNameFormat},
         ${tableNameFormat}Repository,
         ${tableNameFormat}, ${tableNameFormat}Repository,
@@ -22,15 +22,15 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         ${tableNameFormat}Output, ${tableNameFormat}Output>
         implements ${tableNameFormat}Service {
 
-
-    @Autowired
-    private RedisService redisService;
-
     @Override
     public String getModuleName() {
         return "${tableRemark}管理";
     }
 
+    /**
+     * @Description: 默认排序
+     * @Param: [query]
+     */
     @Override
     protected void queryByOrder(EntityQueryWrapper<${tableNameFormat}> query) {
         query.lambda().orderByDescending(${tableNameFormat}::getId);
@@ -46,7 +46,6 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     @Override
     protected ${tableNameFormat} addBefore(${tableNameFormat}Input input, EntityQueryWrapper<${tableNameFormat}> query) {
         ${tableNameFormat} ${tableNameFormatOnCase} = super.addBefore(input, query);
-
         return ${tableNameFormatOnCase};
     }
 
@@ -83,7 +82,11 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
      */
     @Override
     @Transactional(rollbackFor = SpException.class)
-    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
+    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto selectDto) {
+        PageResult<${tableNameFormat}Output> redisResult = queryFromRedisByPage(selectDto);
+        if (redisResult != null) {
+            return redisResult;
+        }
         PageQueryBuilder<${tableNameFormat}> query = new PageQueryBuilder<>(this.getQueryEntityClass());
         this.generateQueryListColumn(query.getQuery());
         this.systemByCriteria(query.getQuery());
@@ -105,7 +108,63 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
         </#if>
     </#list>
 </#list>
-        return query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
+        PageResult<${tableNameFormat}Output> result =query.toPageResult(getQueryRepository(), this.getOutputItemClass(), this::itemConvertHandle);
+        return result;
+    }
+
+    /**
+    * 创建过滤条件
+    *
+    * @param stream
+    * @param input
+    * @return
+    */
+    @Override
+    protected Stream<${tableNameFormat}Output> stream(Stream<${tableNameFormat}Output> stream,Object input) {
+        ${tableNameFormat}Dto selectDto = (${tableNameFormat}Dto) input;
+        // 名称
+        //if (StringUtils.isNotNullOrBlank(selectDto.getArea())) {
+        //stream = stream.filter(item ->
+        //item.getArea().contains(selectDto.getArea().trim()));
+        //}
+        // 类型
+        //if (selectDto.getTypeId() != null && selectDto.getTypeId() != 0) {
+        //stream = stream.filter(item ->
+        //item.getTypeId().equals(selectDto.getTypeId()));
+        }
+        return stream;
+    }
+
+    /**
+     * 查询所有
+     * @param input
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = SpException.class)
+    public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
+        List<${tableNameFormat}Output> redisList = redisService.rangeListAll(RedisConstant.${REDIS_CONSTANT}_ALL);
+        if (redisList != null && redisList.size() > 0) {
+            return list;
+        }
+        EntityQueryWrapper<${tableNameFormat}> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
+        List<${tableNameFormat}> list = this.getQueryRepository().selectForList(wrapper);
+        List<${tableNameFormat}Output> result = AutoMapUtils.mapForList(list,${tableNameFormat}Output.class);
+        //没有，则存进redis
+        if (redisList == null || redisList.size() == 0) {
+            redisService.rightPushAll(RedisConstant.${REDIS_CONSTANT}_ALL,result);
+        }
+        return result;
+    }
+
+    /**
+    * 获取缓存前缀（列表）
+    *
+    * @return
+    */
+    @Override
+    protected String redisConstantAll() {
+        return RedisConstant.${REDIS_CONSTANT}_ALL;
     }
 }
 

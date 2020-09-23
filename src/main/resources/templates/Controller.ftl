@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/${tableNameFormatOnCase}")
 @Api(tags = "${tableRemark}管理")
-@RequiresUser
+//@RequiresUser
 public class ${tableNameFormat}Controller {
 
 	@Autowired
@@ -52,7 +52,7 @@ public class ${tableNameFormat}Controller {
     @ApiOperation(value = "删除${tableRemark}信息")
     @PostMapping("/deleteById")
     public ${tableNameFormat}Output deleteById(@Valid @RequestBody BaseIdDto input){
-        return ${tableNameFormatOnCase}Service.deleteById(input);
+        return ${tableNameFormatOnCase}Service.deleteById(input.getId());
     }
 
 	/**

@@ -10,14 +10,6 @@ public interface ${tableNameFormat}Service extends
         EditApplicationService<Long, ${tableNameFormat}Input, ${tableNameFormat}Input, ${tableNameFormat}Output, ${tableNameFormat}Output>{
 
     /**
-     * 删除
-     *
-     * @param input
-     * @return
-     */
-    ${tableNameFormat}Output deleteById(BaseIdDto input);
-
-    /**
      * 分页查找列表
      *
      * @param input
