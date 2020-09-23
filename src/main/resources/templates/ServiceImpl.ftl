@@ -57,6 +57,7 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     @Override
     protected ${tableNameFormat}Output addAfter(${tableNameFormat}Input input,${tableNameFormat} ${tableNameFormatOnCase},EntityQueryWrapper<${tableNameFormat}> query) {
         ${tableNameFormat}Output ${tableNameFormatOnCase}Output = super.addAfter(input,${tableNameFormatOnCase},query);
+        redisService.delete(RedisConstant.${REDIS_CONSTANT}_ALL);
         return ${tableNameFormatOnCase}Output;
     }
 
@@ -73,7 +74,8 @@ public class ${tableNameFormat}ServiceImpl extends AbstractSpEditApplicationServ
     */
     @Override
     protected ${tableNameFormat}Output updateAfter(${tableNameFormat}Input input,${tableNameFormat} newEntity,${tableNameFormat} oldEntity,EntityQueryWrapper<${tableNameFormat}> wrapper) {
-            return super.updateAfter(input,newEntity,oldEntity,wrapper);
+        redisService.delete(RedisConstant.${REDIS_CONSTANT}_ALL);
+        return super.updateAfter(input,newEntity,oldEntity,wrapper);
     }
 
     /***
