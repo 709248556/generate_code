@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.autumn.web.annotation.NoRepeatSubmit;
 import javax.validation.Valid;
 
 /**
@@ -19,6 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/${tableNameFormatOnCase}")
 @Api(tags = "${tableRemark}管理")
+@NoRepeatSubmit
 //@RequiresUser
 public class ${tableNameFormat}Controller {
 

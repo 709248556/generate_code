@@ -82,8 +82,8 @@ public class ${tableNameFormat}AppServiceImpl extends AbstractSpEditApplicationS
      */
     @Override
     @Transactional(rollbackFor = SpException.class)
-    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto selectDto) {
-        PageResult<${tableNameFormat}Output> redisResult = queryFromRedisByPage(selectDto);
+    public PageResult<${tableNameFormat}Output> queryListPage(${tableNameFormat}SelectDto input) {
+        PageResult<${tableNameFormat}Output> redisResult = queryFromRedisByPage(input);
         if (redisResult != null) {
             return redisResult;
         }
@@ -121,7 +121,7 @@ public class ${tableNameFormat}AppServiceImpl extends AbstractSpEditApplicationS
     */
     @Override
     protected Stream<${tableNameFormat}Output> stream(Stream<${tableNameFormat}Output> stream,Object input) {
-        ${tableNameFormat}Dto selectDto = (${tableNameFormat}Dto) input;
+        ${tableNameFormat}SelectDto selectDto = (${tableNameFormat}SelectDto) input;
         // 名称
         //if (StringUtils.isNotNullOrBlank(selectDto.getArea())) {
         //stream = stream.filter(item ->
