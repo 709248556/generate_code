@@ -23,7 +23,7 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_showroom_type";
+    private static final String TABLE_NAME = "sp_cloud_science_type";
     private static final String LEFT_TABLE = "sp_sms_channel";
     private static final String LEFTJOINON = "channel_id";
     private static final String REDIS_CONSTANT = "KPGZ_DRAW_USER_WIN_ALL";
@@ -36,11 +36,7 @@ public class GenerateController {
 
     static {
         //intput
-        INPUTS.put("title",Boolean.TRUE);
-        INPUTS.put("file_id",Boolean.TRUE);
-        INPUTS.put("area",Boolean.TRUE);
-        INPUTS.put("type_id",Boolean.TRUE);
-        INPUTS.put("link",Boolean.TRUE);
+        INPUTS.put("name",Boolean.TRUE);
 
 
 //        INPUTS.put("type",Boolean.FALSE);

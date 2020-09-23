@@ -1,12 +1,13 @@
 import com.autumn.mybatis.mapper.PageResult;
 import com.autumn.mybatis.wrapper.EntityQueryWrapper;
-import com.autumn.util.AutoMapUtils;
-import com.autumn.util.StringUtils;
 import com.autumn.util.data.PageQueryBuilder;
-import com.zjsm.sp.application.services.AbstractSpEditApplicationService;
+import com.zjsm.sp.application.SpException;
+import com.zjsm.sp.application.services.common.AbstractSpEditApplicationService;
+import com.zjsm.sp.application.services.common.RedisService;
+import com.zjsm.sp.constants.RedisConstant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.autumn.exception.SpException;
 
 /**
  * @Description:

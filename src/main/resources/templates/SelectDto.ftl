@@ -1,4 +1,4 @@
-import com.zjsm.sp.application.admin.dto.BasePageInput;
+import com.zjsm.sp.application.dto.BasePlatformPageInput;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
  * @date ${.now?date}
  */
 @Data
-public class ${tableNameFormat}SelectDto extends BasePageInput{
+public class ${tableNameFormat}SelectDto extends BasePlatformPageInput{
 
     private static final long serialVersionUID = ${serialVersionUID4}L ;
 
