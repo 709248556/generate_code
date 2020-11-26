@@ -1,4 +1,4 @@
-import com.autumn.domain.entities.AbstractDefaultEntity;
+import com.autumn.domain.entities.auditing.user.gmt.AbstractDefaultUserGmtFullAuditingEntity;
 import com.autumn.domain.entities.auditing.SoftDelete;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import com.autumn.audited.annotation.LogMessage;
 @Getter
 @Setter
 @Table(name = "${tableName}")
-public class ${tableNameFormat} extends AbstractDefaultEntity implements SpEntity,SoftDelete{
+public class ${tableNameFormat} extends AbstractDefaultUserGmtFullAuditingEntity implements SpEntity,SoftDelete{
 
 	private static final long serialVersionUID = ${serialVersionUID1}L ;
 <#assign i = 1>

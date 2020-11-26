@@ -23,10 +23,10 @@ public class GenerateController {
     private static final String LEFT = "left";
     private static final String TREE = "tree";
 
-    private static final String TABLE_NAME = "sp_cloud_science_type";
-    private static final String LEFT_TABLE = "sp_sms_channel";
-    private static final String LEFTJOINON = "channel_id";
-    private static final String REDIS_CONSTANT = "KPGZ_DRAW_USER_WIN_ALL";
+    private static final String TABLE_NAME = "ai_task_status";
+    private static final String LEFT_TABLE = "sp_cloud_science_column";
+    private static final String LEFTJOINON = "column_id";
+    private static final String REDIS_CONSTANT = "KPGZ_CLOUD_SCIENCE_ALL";
 
     private static final HashMap<String,Boolean> INPUTS = new HashMap<>();
     private static final List<LeftQueryVO> leftQueryVOS = new ArrayList<>();
@@ -37,20 +37,29 @@ public class GenerateController {
     static {
         //intput
         INPUTS.put("name",Boolean.TRUE);
+        INPUTS.put("path",Boolean.TRUE);
+        INPUTS.put("ref_type",Boolean.TRUE);
+        INPUTS.put("absolute_path",Boolean.TRUE);
+        INPUTS.put("file_type",Boolean.TRUE);
 
 
-//        INPUTS.put("type",Boolean.FALSE);
-        INPUTS.put("condition_type",Boolean.FALSE);
-        INPUTS.put("condition_num",Boolean.FALSE);
+        INPUTS.put("status",Boolean.FALSE);
+        INPUTS.put("inform_time",Boolean.FALSE);
+        INPUTS.put("value",Boolean.FALSE);
+        INPUTS.put("call_back",Boolean.FALSE);
+        INPUTS.put("oauth_url",Boolean.FALSE);
+        INPUTS.put("access_token_url",Boolean.FALSE);
+        INPUTS.put("user_info_url",Boolean.FALSE);
         //selectDTOs
+        SELECTDTOS.add("title");
         SELECTDTOS.add("status");
 
         //leftQueryVOS
         LeftQueryVO leftQueryVO = new LeftQueryVO();
         leftQueryVO.setDTOType("String");
-        leftQueryVO.setJdbcType("nationCode");//表的字段名
-        leftQueryVO.setColumnComment("手机地区码");//注释
-        leftQueryVO.setColumn("nation_code");//aread_id
+        leftQueryVO.setJdbcType("columuName");//表的字段名
+        leftQueryVO.setColumnComment("栏目名");//注释
+        leftQueryVO.setColumn("name");//aread_id
         leftQueryVO.setProperty(FormatUtil._split(leftQueryVO.getColumn()));//
         LeftQueryVO leftQueryVO2 = new LeftQueryVO();
         leftQueryVO2.setDTOType("Integer");
@@ -60,7 +69,7 @@ public class GenerateController {
         leftQueryVO2.setProperty(FormatUtil._split(leftQueryVO2.getColumn()));//
 
         leftQueryVOS.add(leftQueryVO);
-        leftQueryVOS.add(leftQueryVO2);
+//        leftQueryVOS.add(leftQueryVO2);
     }
 
     public static void main(String[] args) {

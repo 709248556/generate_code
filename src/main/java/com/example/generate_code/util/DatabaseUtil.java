@@ -16,9 +16,12 @@ public class DatabaseUtil {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     //todo
-    private static final String URL = "jdbc:mysql://192.168.0.50:3306/zjsm-sp?characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=GMT%2b8&&useInformationSchema=true";
+//    private static final String URL = "jdbc:mysql://192.168.0.50:3306/zjsm-sp?characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=GMT%2b8&&useInformationSchema=true";
+//    private static final String USERNAME = "test";
+//    private static final String PASSWORD = "123456";
+private static final String URL = "jdbc:mysql://116.199.15.19:3306/ai_transcoder?characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=GMT%2b8&&useInformationSchema=true";
     private static final String USERNAME = "test";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "test@zjzl!23";
 
     private static final String SQL = "SELECT * FROM ";// 数据库操作
 

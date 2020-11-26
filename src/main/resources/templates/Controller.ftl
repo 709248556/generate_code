@@ -19,7 +19,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/${tableNameFormatOnCase}")
 @Api(tags = "${tableRemark}管理")
-@NoRepeatSubmit
 //@RequiresUser
 public class ${tableNameFormat}Controller {
 
@@ -32,6 +31,7 @@ public class ${tableNameFormat}Controller {
 	 */
     @ApiOperation(value = "添加${tableRemark}信息")
     @PostMapping("/add")
+    @NoRepeatSubmit
     public ${tableNameFormat}Output add(@Valid @RequestBody ${tableNameFormat}Input ${tableNameFormatOnCase}Input){
         return ${tableNameFormatOnCase}Service.add(${tableNameFormatOnCase}Input);
     }
@@ -42,6 +42,7 @@ public class ${tableNameFormat}Controller {
 	 */
     @ApiOperation(value = "编辑${tableRemark}信息")
     @PostMapping("/update")
+    @NoRepeatSubmit
     public ${tableNameFormat}Output update(@Valid @RequestBody  ${tableNameFormat}Input ${tableNameFormatOnCase}Input){
         return ${tableNameFormatOnCase}Service.update(${tableNameFormatOnCase}Input);
     }
@@ -52,8 +53,9 @@ public class ${tableNameFormat}Controller {
 	 */
     @ApiOperation(value = "删除${tableRemark}信息")
     @PostMapping("/deleteById")
-    public ${tableNameFormat}Output deleteById(@Valid @RequestBody BaseIdDto input){
-        return ${tableNameFormatOnCase}Service.deleteById(input.getId());
+    @NoRepeatSubmit
+    public void deleteById(@Valid @RequestBody BaseIdDto input){
+        ${tableNameFormatOnCase}Service.deleteById(input.getId());
     }
 
 	/**

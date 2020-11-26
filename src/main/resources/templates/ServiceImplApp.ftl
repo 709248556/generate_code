@@ -131,7 +131,7 @@ public class ${tableNameFormat}AppServiceImpl extends AbstractSpEditApplicationS
         //if (selectDto.getTypeId() != null && selectDto.getTypeId() != 0) {
         //stream = stream.filter(item ->
         //item.getTypeId().equals(selectDto.getTypeId()));
-        }
+        //}
         return stream;
     }
 
@@ -145,7 +145,7 @@ public class ${tableNameFormat}AppServiceImpl extends AbstractSpEditApplicationS
     public List<${tableNameFormat}Output> queryAll(${tableNameFormat}SelectDto input) {
         List<${tableNameFormat}Output> redisList = redisService.rangeListAll(RedisConstant.${REDIS_CONSTANT}_ALL);
         if (redisList != null && redisList.size() > 0) {
-            return list;
+            return redisList;
         }
         EntityQueryWrapper<${tableNameFormat}> wrapper = new EntityQueryWrapper<>(this.getQueryEntityClass());
         List<${tableNameFormat}> list = this.getQueryRepository().selectForList(wrapper);
